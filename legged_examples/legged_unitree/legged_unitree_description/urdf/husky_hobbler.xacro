@@ -11,6 +11,13 @@
   
   <xacro:property name="efflim" value="33.5" />
 
+  <xacro:property name="r_hip_frontal_ipos" value="0.0440" />
+  <xacro:property name="l_hip_frontal_ipos" value="3.0976" />
+  <xacro:property name="l_hip_frontal_lowlim" value="-0.1745" />
+  <xacro:property name="l_hip_frontal_uplim" value="1.3963" />
+  <xacro:property name="r_hip_frontal_lowlim" value="-1.3963" />
+  <xacro:property name="r_hip_frontal_uplim" value="0.1745" />
+
   <xacro:property name="r_axis" value="1" />
   <xacro:property name="l_axis" value="1" />
 
@@ -60,18 +67,13 @@
     <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
 
-  <xacro:property name="r_hip_frontal_ipos" value="-0.1745" />
-  <xacro:property name="l_hip_frontal_ipos" value="-2.9671" />
-  <xacro:property name="l_hip_frontal_lowlim" value="-0.5236" />
-  <xacro:property name="l_hip_frontal_uplim" value="0.5236" />
-
   <joint name="RF_HAA" type="revolute">
     <parent link="base"/>
     <child link="RF_hip"/>
     <origin rpy="-1.5708 ${r_hip_frontal_ipos} -1.5708"    xyz="0.2087 -0.045 0.0001"/>
     <axis xyz="0.0 0.0 1.0" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_frontal_lowlim}" upper="${l_hip_frontal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_HAA" type="revolute">
@@ -98,13 +100,15 @@
     <origin rpy="-1.5708 ${r_hip_frontal_ipos} -1.5708"    xyz="-0.1862 -0.045 0.0002"/>
     <axis xyz="0 0 1" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_frontal_lowlim}" upper="${l_hip_frontal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="l_hip_sagittal_ipos" value="-1.0472" />
-  <xacro:property name="r_hip_sagittal_ipos" value="-2.0944" />
-  <xacro:property name="l_hip_sagittal_lowlim" value="-0.8727" />
-  <xacro:property name="l_hip_sagittal_uplim" value="0.8727" />
+  <xacro:property name="l_hip_sagittal_ipos" value="-0.8496" />
+  <xacro:property name="r_hip_sagittal_ipos" value="-2.2920" />
+  <xacro:property name="l_hip_sagittal_lowlim" value="-0.7212" />
+  <xacro:property name="l_hip_sagittal_uplim" value="0.8496" />
+  <xacro:property name="r_hip_sagittal_lowlim" value="-0.8496" />
+  <xacro:property name="r_hip_sagittal_uplim" value="0.7212" />
 
   <joint name="RF_HFE" type="revolute">
     <parent link="RF_hip"/>
@@ -112,7 +116,7 @@
     <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_HFE" type="revolute">
@@ -139,13 +143,15 @@
     <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="l_knee_ipos" value="1.6755" />
-  <xacro:property name="r_knee_ipos" value="-1.6755" />    
-  <xacro:property name="l_knee_lowlim" value="-0.6981" />
-  <xacro:property name="l_knee_uplim" value="0.6981" />
+  <xacro:property name="l_knee_ipos" value="1.6813" />
+  <xacro:property name="r_knee_ipos" value="-1.6813" />    
+  <xacro:property name="l_knee_lowlim" value="-0.8331" />
+  <xacro:property name="l_knee_uplim" value="0.73" />
+  <xacro:property name="r_knee_lowlim" value="-0.73" />
+  <xacro:property name="r_knee_uplim" value="0.8331" />
 
   <joint name="RF_KFE" type="revolute">
     <parent link="RF_thigh"/>
@@ -153,7 +159,7 @@
     <origin rpy="0 0 ${r_knee_ipos}"   xyz="0.18 0.0 -0.0431"/>
     <axis xyz="0.0 0.0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_knee_lowlim}" upper="${l_knee_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_KFE" type="revolute">
@@ -180,81 +186,18 @@
     <origin rpy="0 0 ${r_knee_ipos}"   xyz="0.18 0.0 -0.0431"/>
     <axis xyz="0.0 0.0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_knee_lowlim}" upper="${l_knee_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
 
-  <!--ANKLES-->
+  <!--ANKLES (MADE FIXED FOR ONE-TO-ONE)-->
 
   <xacro:property name="l_ankle_lowlim" value="-0.65" />
   <xacro:property name="l_ankle_uplim" value="0.92" />
   <xacro:property name="r_ankle_lowlim" value="-0.92" />
   <xacro:property name="r_ankle_uplim" value="0.65" />
 
-  <!--REAL FOOT SECTION 1/3 (COMMENT THIS IN, COMMENT BELOW OUT)-->
-  <!--
-  <joint name="RF_ankle" type="revolute">
-    <parent link="RF_calf"/>
-    <child link="RF_fut"/>
-    <origin rpy="0 0 ${l_knee_ipos}"   xyz="0.333 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0" />
-    <dynamics damping="${free_joint_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${r_ankle_lowlim}" upper="${r_ankle_uplim}" velocity="8.7267"/>
-  </joint>
-  
-  <joint name="LF_ankle" type="revolute">
-    <parent link="LF_calf"/>
-    <child link="LF_fut"/>
-    <origin rpy="0 0 ${r_knee_ipos}"   xyz="0.333 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0" />
-    <dynamics damping="${free_joint_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_ankle_lowlim}" upper="${l_ankle_uplim}" velocity="8.7267"/>
-  </joint>
-  
-  <joint name="LH_ankle" type="revolute">
-    <parent link="LH_calf"/>
-    <child link="LH_fut"/>
-    <origin rpy="0 0 ${r_knee_ipos}"   xyz="0.333 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0" />
-    <dynamics damping="${free_joint_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_ankle_lowlim}" upper="${l_ankle_uplim}" velocity="8.7267"/>
-  </joint>
-  
-  <joint name="RH_ankle" type="revolute">
-    <parent link="RH_calf"/>
-    <child link="RH_fut"/>
-    <origin rpy="0 0 ${l_knee_ipos}"   xyz="0.333 0.0 0.0"/>
-    <axis xyz="0.0 0.0 1.0" />
-    <dynamics damping="${free_joint_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${r_ankle_lowlim}" upper="${r_ankle_uplim}" velocity="8.7267"/>
-  </joint>
 
-  <joint name="RF_foot_fixed" type="fixed">
-    <parent link="RF_fut"/>
-    <child link="RF_FOOT"/>
-    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
-  </joint>
-  
-  <joint name="LF_foot_fixed" type="fixed">
-    <parent link="LF_fut"/>
-    <child link="LF_FOOT"/>
-    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
-  </joint>
-  
-  <joint name="LH_foot_fixed" type="fixed">
-    <parent link="LH_fut"/>
-    <child link="LH_FOOT"/>
-    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
-  </joint>
-  
-  <joint name="RH_foot_fixed" type="fixed">
-    <parent link="RH_fut"/>
-    <child link="RH_FOOT"/>
-    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
-  </joint>
-  -->
-  <!--REAL FOOT SECTION END-->
-
-  <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
+  <!--foot nub-->
   <joint name="RF_foot_fixed" type="fixed">
     <parent link="RF_calf"/>
     <child link="RF_FOOT"/>
@@ -278,8 +221,6 @@
     <child link="RH_FOOT"/>
     <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
   </joint>
-  -->
-  <!--NUB FOOT SECTION END-->
 
   <gazebo reference="RF_foot_fixed">
     <disableFixedJointLumping>true</disableFixedJointLumping>
@@ -309,6 +250,12 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.3 0.1 0.12"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.095"/>
+      <geometry>
+        <box size="0.4 0.45 0.07"/>
       </geometry>
     </collision>
     <visual name="base_visual">
@@ -742,139 +689,13 @@
     <self_collide>1</self_collide>
   </gazebo>
   
-  <!--REAL FOOT SECTION 2/3 (COMMENT THIS IN, COMMENT BELOW OUT)-->
-  <!--
-  <xacro:property name="foot_ix" value="0.01" />
-  <xacro:property name="foot_length" value="0.16" />
-  <xacro:property name="foot_radius" value="0.01" />
-   
-  <xacro:property name="foot_sphere_ix" value="0.12" />
-  <xacro:property name="foot_sphere_radius" value="0.02" />
-  
-  <link name="RF_fut">
-    <inertial>
-      <mass value="0.0716"/> 
-      <origin rpy="0.0 0.0 0.0" xyz="0.0528 -0.0 0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
-    </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
-      <geometry>
-        <cylinder length="${foot_length}" radius="${foot_radius}"/>
-      </geometry>
-    </collision>
-    <visual name="RF_fut_visual">
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <mesh filename="/home/franksl/qiayuanliao_ws4/src/husky_one_to_one/meshes/fr_foot.STL" scale="1 1 1"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.251 0.251 0.251 1.0"/>
-      </material>
-    </visual>
-  </link>
-
-  <link name="LF_fut">
-    <inertial>
-      <mass value="0.0716"/> 
-      <origin rpy="0.0 0.0 0.0" xyz="0.0528 0.0 -0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
-    </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
-      <geometry>
-        <cylinder length="${foot_length}" radius="${foot_radius}"/>
-      </geometry>
-    </collision>
-    <visual name="LF_fut_visual">
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <mesh filename="/home/franksl/qiayuanliao_ws4/src/husky_one_to_one/meshes/fr_foot.STL" scale="1 1 1"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.298 0.298 0.298 1.0"/>
-      </material>
-    </visual>
-  </link>
-
-  <link name="LH_fut">
-    <inertial>
-      <mass value="0.0716"/> 
-      <origin rpy="0.0 0.0 0.0" xyz="0.0528 0.0 -0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
-    </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
-      <geometry>
-        <cylinder length="${foot_length}" radius="${foot_radius}"/>
-      </geometry>
-    </collision>
-    <visual name="LH_fut_visual">
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <mesh filename="/home/franksl/qiayuanliao_ws4/src/husky_one_to_one/meshes/fr_foot.STL" scale="1 1 1"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.298 0.298 0.298 1.0"/>
-      </material>
-    </visual>
-  </link>
-
-  <link name="RH_fut">
-    <inertial>
-      <mass value="0.0716"/> 
-      <origin rpy="0.0 0.0 0.0" xyz="0.0528 0.0 0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
-    </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
-      <geometry>
-        <cylinder length="${foot_length}" radius="${foot_radius}"/>
-      </geometry>
-    </collision>
-    <visual name="RH_fut_visual">
-      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
-      <geometry>
-        <mesh filename="/home/franksl/qiayuanliao_ws4/src/husky_one_to_one/meshes/fr_foot.STL" scale="1 1 1"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.298 0.298 0.298 1.0"/>
-      </material>
-    </visual>
-  </link>
-  
-  <gazebo reference="RF_fut">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="LF_fut">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="LH_fut">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  <gazebo reference="RH_fut">
-    <mu1>0.6</mu1>
-    <mu2>0.6</mu2>
-    <self_collide>1</self_collide>
-  </gazebo>
-  -->
-  <!--REAL FOOT SECTION END-->
-  
-  <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
   <xacro:property name="foot_ix" value="0.01" />
   <xacro:property name="foot_length" value="0.16" />
   <xacro:property name="foot_radius" value="0.01" />
    
   <xacro:property name="foot_sphere_ix" value="0.342" />
   <xacro:property name="foot_sphere_radius" value="0.02" />
-  <!--NUB FOOT SECTION END-->
-
+  
   <link name="RF_FOOT">
     <inertial>
       <mass value="0.06"/>
@@ -960,7 +781,6 @@
     <kd value="100.0"/>
   </gazebo>
   
-  <!--CONTROL ROD SECTION 1/2-->
   <!--
   <joint name="fr_control_rod" type="revolute">
     <parent link="RF_thigh"/>
@@ -997,6 +817,7 @@
     <dynamics damping="${free_joint_damping}" friction="${free_joint_sfriction}"/>
     <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
+  
 
   <link name="fr_fibula">
     <inertial>
@@ -1090,7 +911,6 @@
     </visual>
   </link>
   -->
-  <!--CONTROL ROD SECTION END-->
   
   <transmission name="RF_HAA_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -1226,7 +1046,6 @@
     </actuator>
   </transmission>
   
-  <!--REAL FOOT SECTION 3/3 (COMMENT THIS IN, NO NEED TO COMMENT OUT)-->
   <!--
   <transmission name="RF_ankle_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -1271,11 +1090,8 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  -->
-  <!--REAL FOOT SECTION END-->
   
-  <!--CONTROL ROD SECTION 2/2-->
-  <!--
+
   <transmission name="fr_rod_joint_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="fr_control_rod">
@@ -1320,15 +1136,14 @@
     </actuator>
   </transmission>
   -->
-  <!--CONTROL ROD SECTION END-->
 
-  
+  <!--
   <gazebo>
   <plugin name="RF_foot_fixed_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>RF_KFE</joint>
     <mimicJoint>RF_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>1</multiplier>
+    <multiplier>-1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
@@ -1339,7 +1154,7 @@
     <joint>LF_KFE</joint>
     <mimicJoint>LF_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>1</multiplier>
+    <multiplier>-1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
@@ -1350,7 +1165,7 @@
     <joint>RH_KFE</joint>
     <mimicJoint>RH_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>1</multiplier>
+    <multiplier>-1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
@@ -1361,13 +1176,14 @@
     <joint>LH_KFE</joint>
     <mimicJoint>LH_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>1</multiplier>
+    <multiplier>-1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
+
   <plugin name="fr_control_rod_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>RF_KFE</joint>
     <mimicJoint>fr_control_rod</mimicJoint>
@@ -1411,8 +1227,7 @@
     <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
-  
   </gazebo>
-  
+  -->
 
 </robot>

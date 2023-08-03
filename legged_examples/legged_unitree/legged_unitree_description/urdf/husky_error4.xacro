@@ -18,8 +18,8 @@
   <xacro:property name="r_hip_frontal_lowlim" value="-1.3963" />
   <xacro:property name="r_hip_frontal_uplim" value="0.1745" />
 
-  <xacro:property name="r_axis" value="-1" />
-  <xacro:property name="l_axis" value="-1" />
+  <xacro:property name="r_axis" value="1" />
+  <xacro:property name="l_axis" value="1" />
 
   <gazebo>
   <plugin filename="liblegged_hw_sim.so" name="gazebo_ros_control">
