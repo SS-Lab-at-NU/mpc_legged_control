@@ -308,7 +308,7 @@
   <link name="base">
     <inertial>
       <mass value="3.1895"/> 
-      <origin rpy="0.0 0.0 -1.5708" xyz="0.0001 0.0301 0.0241"/>
+      <origin rpy="0.0 0.0 -1.5708" xyz="0.0301 -0.0001 0.0241"/>
       <inertia ixx="0.0170990623" ixy="3.09e-08" ixz="-5.394e-07" iyy="0.0115476717" iyz="4.77948e-05" izz="0.0268461573"/>
     </inertial>
     <collision>
@@ -335,7 +335,7 @@
   <link name="RF_hip">
     <inertial>
       <mass value="0.0431"/> 
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 -0.0001 -0.003"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="9.9689e-06" ixy="7.49e-08" ixz="-2.3932e-06" iyy="2.49545e-05" iyz="5.1e-09" izz="2.81284e-05"/>
     </inertial>
     <collision>
@@ -358,7 +358,7 @@
   <link name="LF_hip">
     <inertial>
       <mass value="0.0431"/> 
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 -0.0001 -0.003"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="9.9689e-06" ixy="7.49e-08" ixz="-2.3932e-06" iyy="2.49545e-05" iyz="5.1e-09" izz="2.81284e-05"/>
     </inertial>
     <collision>
@@ -381,7 +381,7 @@
   <link name="LH_hip">
     <inertial>
       <mass value="0.0431"/> 
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 -0.0001 -0.003"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="9.9689e-06" ixy="7.49e-08" ixz="-2.3932e-06" iyy="2.49545e-05" iyz="5.1e-09" izz="2.81284e-05"/>
     </inertial>
     <collision>
@@ -404,7 +404,7 @@
   <link name="RH_hip">
     <inertial>
       <mass value="0.0431"/> 
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 -0.0001 -0.003"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="9.9689e-06" ixy="7.49e-08" ixz="-2.3932e-06" iyy="2.49545e-05" iyz="5.1e-09" izz="2.81284e-05"/>
     </inertial>
     <collision>

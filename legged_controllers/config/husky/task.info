@@ -20,7 +20,7 @@ swing_trajectory_config
   liftOffVelocity               0.07
   touchDownVelocity            -0.1
   swingHeight                   0.05
-  swingTimeScale                0.1
+  swingTimeScale                0.5
 }
 
 ; DDP settings
@@ -154,7 +154,7 @@ initialState
    ;; Base Pose: [position, orientation] ;;
    (6,0)  0.0     ; p_base_x
    (7,0)  0.0     ; p_base_y
-   (8,0)  0.37     ; p_base_z
+   (8,0)  0.42     ; p_base_z
    (9,0)  0.0     ; theta_base_z
    (10,0) 0.0     ; theta_base_y
    (11,0) 0.0     ; theta_base_x
