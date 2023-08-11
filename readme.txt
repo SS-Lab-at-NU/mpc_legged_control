@@ -4,12 +4,18 @@
 	-husky_defined1.xacro (easy to add and remove feet)
 	-husky_midpoint.xacro (joints start in middle of range)
 	-launch file loads husky.xacro (husky.xacro is a copy of husky_midpoint, with feet activated)
--Tests:
-	-LOOK AT KP AND KD in swinglegtask
-		Kp 350 -> 10, Kd 37 -> 0; no difference
+-Tests to resolve 'recalculations' error:
+	-Kp 350 -> 10, Kd 37 -> 0 in task.info swingLegTask
+		-ERROR
 	-change urdf so the robot starts lying on the ground (feet not needed for support)
-		also change heights
-	-change all joint initial posiitons to avoid calculations near 0
+		-as per chenghao
+		-ERROR
+	-change all joint initial posiitons to avoid calculations near 0 (husky_crouching)
+		-change defaultJointState in reference.info
+			-ERROR
+		-change initialState in task.info to defaultJointState
+			-ERROR
+	-Husky_crouching_no_fin, hips are thicc
 		
 
 To launch husky_description:

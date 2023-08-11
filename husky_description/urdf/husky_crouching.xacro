@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="husky">
 
-  <!--husky_crouching_no_fin-->
+  <!--husky_crouching-->
 
   <xacro:arg name="robot_type" default="husky"/>
 
