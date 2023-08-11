@@ -6,6 +6,11 @@
 	-launch file loads husky.xacro (husky.xacro is a copy of husky_midpoint, with feet activated)
 -Tests:
 	-LOOK AT KP AND KD in swinglegtask
+		Kp 350 -> 10, Kd 37 -> 0; no difference
+	-change urdf so the robot starts lying on the ground (feet not needed for support)
+		also change heights
+	-change all joint initial posiitons to avoid calculations near 0
+		
 
 To launch husky_description:
 	
@@ -21,12 +26,10 @@ export ROBOT_TYPE=husky
 roslaunch legged_controllers load_controller.launch cheater:=false
 
 Terminal 3:
-source ~/qiayuanliao_ws5/devel/setup.bash
 set-title "start ctrl"
 /home/franksl/qiayuanliao_ws5/src/mpc_legged_control/scripts/start_controller.py
 
 Terminal 4:
-source ~/qiayuanliao_ws5/devel/setup.bash
 set-title "rqt_gui"
 rosrun rqt_gui rqt_gui
 

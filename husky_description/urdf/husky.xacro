@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="husky">
 
+  <!--husky_crouching-->
+
   <xacro:arg name="robot_type" default="husky"/>
 
   <xacro:property name="motor_damping" value="0" />
@@ -10,6 +12,14 @@
   <xacro:property name="free_joint_sfriction" value="0" />
   
   <xacro:property name="efflim" value="33.5" />
+
+  <xacro:property name="r_hip_frontal_ipos" value="-1.3523" />
+  <xacro:property name="r_hip_frontal_lowlim" value="0" />
+  <xacro:property name="r_hip_frontal_uplim" value="1.5708" />
+  <xacro:property name="l_hip_frontal_ipos" value="-1.7893" />
+  <xacro:property name="l_hip_frontal_lowlim" value="-1.5708" />
+  <xacro:property name="l_hip_frontal_uplim" value="0" />
+
 
   <xacro:property name="r_axis" value="1" />
   <xacro:property name="l_axis" value="1" />
@@ -60,18 +70,13 @@
     <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
 
-  <xacro:property name="r_hip_frontal_ipos" value="-0.1745" />
-  <xacro:property name="l_hip_frontal_ipos" value="-2.9671" />
-  <xacro:property name="l_hip_frontal_lowlim" value="-0.5236" />
-  <xacro:property name="l_hip_frontal_uplim" value="0.5236" />
-
   <joint name="RF_HAA" type="revolute">
     <parent link="base"/>
     <child link="RF_hip"/>
     <origin rpy="-1.5708 ${r_hip_frontal_ipos} -1.5708"    xyz="0.2087 -0.045 0.0001"/>
     <axis xyz="0.0 0.0 1.0" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_frontal_lowlim}" upper="${l_hip_frontal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_HAA" type="revolute">
@@ -98,13 +103,16 @@
     <origin rpy="-1.5708 ${r_hip_frontal_ipos} -1.5708"    xyz="-0.1862 -0.045 0.0002"/>
     <axis xyz="0 0 1" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_frontal_lowlim}" upper="${l_hip_frontal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="l_hip_sagittal_ipos" value="-1.0472" />
-  <xacro:property name="r_hip_sagittal_ipos" value="-2.0944" />
-  <xacro:property name="l_hip_sagittal_lowlim" value="-0.8727" />
-  <xacro:property name="l_hip_sagittal_uplim" value="0.8727" />
+  <xacro:property name="r_hip_sagittal_ipos" value="-1.5708" />
+  <xacro:property name="r_hip_sagittal_lowlim" value="-1.5708" />
+  <xacro:property name="r_hip_sagittal_uplim" value="0" />
+  <xacro:property name="l_hip_sagittal_ipos" value="-1.5708" />
+  <xacro:property name="l_hip_sagittal_lowlim" value="0" />
+  <xacro:property name="l_hip_sagittal_uplim" value="1.5708" />
+
 
   <joint name="RF_HFE" type="revolute">
     <parent link="RF_hip"/>
@@ -112,7 +120,7 @@
     <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_HFE" type="revolute">
@@ -139,13 +147,16 @@
     <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="l_knee_ipos" value="1.6755" />
-  <xacro:property name="r_knee_ipos" value="-1.6755" />    
-  <xacro:property name="l_knee_lowlim" value="-0.6981" />
-  <xacro:property name="l_knee_uplim" value="0.6981" />
+
+  <xacro:property name="r_knee_ipos" value="-2.4113" />  
+  <xacro:property name="r_knee_lowlim" value="0" />
+  <xacro:property name="r_knee_uplim" value="1.5631" />
+  <xacro:property name="l_knee_ipos" value="2.4113" />
+  <xacro:property name="l_knee_lowlim" value="-1.5631" />
+  <xacro:property name="l_knee_uplim" value="0" />
 
   <joint name="RF_KFE" type="revolute">
     <parent link="RF_thigh"/>
@@ -153,7 +164,7 @@
     <origin rpy="0 0 ${r_knee_ipos}"   xyz="0.18 0.0 -0.0431"/>
     <axis xyz="0.0 0.0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_knee_lowlim}" upper="${l_knee_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_KFE" type="revolute">
@@ -180,7 +191,7 @@
     <origin rpy="0 0 ${r_knee_ipos}"   xyz="0.18 0.0 -0.0431"/>
     <axis xyz="0.0 0.0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${l_knee_lowlim}" upper="${l_knee_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
 
   <!--ANKLES-->
@@ -191,6 +202,7 @@
   <xacro:property name="r_ankle_uplim" value="0.65" />
 
   <!--REAL FOOT SECTION 1/3 (COMMENT THIS IN, COMMENT BELOW OUT)-->
+  <!--
   <joint name="RF_ankle" type="revolute">
     <parent link="RF_calf"/>
     <child link="RF_fut"/>
@@ -254,7 +266,6 @@
   <!--REAL FOOT SECTION END-->
 
   <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
-  <!--
   <joint name="RF_foot_fixed" type="fixed">
     <parent link="RF_calf"/>
     <child link="RF_FOOT"/>
@@ -302,13 +313,19 @@
   <link name="base">
     <inertial>
       <mass value="3.1895"/> 
-      <origin rpy="0.0 0.0 -1.5708" xyz="0.0301 -0.0001 0.0241"/>
+      <origin rpy="0.0 0.0 -1.5708" xyz="-0.0301 -0.0001 0.0241"/>
       <inertia ixx="0.0170990623" ixy="3.09e-08" ixz="-5.394e-07" iyy="0.0115476717" iyz="4.77948e-05" izz="0.0268461573"/>
     </inertial>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.3 0.1 0.12"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -.14"/>
+      <geometry>
+        <box size="0.3 0.04 0.16"/>
       </geometry>
     </collision>
     <visual name="base_visual">
@@ -743,6 +760,7 @@
   </gazebo>
   
   <!--REAL FOOT SECTION 2/3 (COMMENT THIS IN, COMMENT BELOW OUT)-->
+  <!--
   <xacro:property name="foot_ix" value="0.01" />
   <xacro:property name="foot_length" value="0.16" />
   <xacro:property name="foot_radius" value="0.01" />
@@ -866,14 +884,12 @@
   <!--REAL FOOT SECTION END-->
   
   <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
-  <!--
   <xacro:property name="foot_ix" value="0.01" />
   <xacro:property name="foot_length" value="0.16" />
   <xacro:property name="foot_radius" value="0.01" />
    
   <xacro:property name="foot_sphere_ix" value="0.342" />
   <xacro:property name="foot_sphere_radius" value="0.02" />
-  -->
   <!--NUB FOOT SECTION END-->
 
   <link name="RF_FOOT">
@@ -1228,6 +1244,7 @@
   </transmission>
   
   <!--REAL FOOT SECTION 3/3 (COMMENT THIS IN, NO NEED TO COMMENT OUT)-->
+  <!--
   <transmission name="RF_ankle_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="RF_ankle">
@@ -1328,7 +1345,7 @@
     <joint>RF_KFE</joint>
     <mimicJoint>RF_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>-1</multiplier>
+    <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
@@ -1339,7 +1356,7 @@
     <joint>LF_KFE</joint>
     <mimicJoint>LF_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>-1</multiplier>
+    <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
@@ -1350,7 +1367,7 @@
     <joint>RH_KFE</joint>
     <mimicJoint>RH_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>-1</multiplier>
+    <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 
@@ -1361,7 +1378,7 @@
     <joint>LH_KFE</joint>
     <mimicJoint>LH_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
-    <multiplier>-1</multiplier>
+    <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
     <maxEffort>1000</maxEffort> 

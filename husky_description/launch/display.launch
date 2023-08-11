@@ -1,0 +1,15 @@
+<launch>
+
+	<!--robot description-->
+	<param name="robot_description" command="xacro $(find husky_description)/urdf/husky.xacro"/>
+	
+	<!--rviz-->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+	
+	<node name="rviz" pkg="rviz" type="rviz"
+		args="-d /home/franksl/qiayuanliao_ws5/src/mpc_legged_control/husky_description/config/config.rviz" />
+	
+	<node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" output="screen"/>  
+	
+	
+</launch>
