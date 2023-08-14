@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="husky">
 
-  <!--aug 14 crouched husky no walls-->
+  <!--aug 14 crouched husky, testing collision boxes and joint limits
+  spawned with walls. change launch file and config files-->
 
   <xacro:arg name="robot_type" default="husky"/>
 
@@ -12,21 +13,13 @@
   <xacro:property name="free_joint_sfriction" value="0" />
   
   <xacro:property name="efflim" value="33.5" />
-<!-- 
+
   <xacro:property name="r_hip_frontal_ipos" value="-0.0440" />
   <xacro:property name="r_hip_frontal_lowlim" value="-1.5268" />
-  <xacro:property name="r_hip_frontal_uplim" value="0.088" />
+  <xacro:property name="r_hip_frontal_uplim" value="0.0880" />
   <xacro:property name="l_hip_frontal_ipos" value="-3.0976" />
-  <xacro:property name="l_hip_frontal_lowlim" value="0.088" />
-  <xacro:property name="l_hip_frontal_uplim" value="1.5268" /> -->
-
-
-  <xacro:property name="r_hip_frontal_ipos" value="${-10*pi/180}" />
-  <xacro:property name="r_hip_frontal_lowlim" value="${-10*pi/180}" />
-  <xacro:property name="r_hip_frontal_uplim" value="${-10*pi/180}" />
-  <xacro:property name="l_hip_frontal_ipos" value="${100*pi/180}" />
-  <xacro:property name="l_hip_frontal_lowlim" value="${100*pi/180}" />
-  <xacro:property name="l_hip_frontal_uplim" value="${100*pi/180}" />
+  <xacro:property name="l_hip_frontal_lowlim" value="-0.0880" />
+  <xacro:property name="l_hip_frontal_uplim" value="1.5268" />
 
 
   <xacro:property name="r_axis" value="1" />
@@ -114,63 +107,57 @@
     <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="fr_hip_sagittal_ipos" value="-2.0944" />
-  <xacro:property name="fr_hip_sagittal_lowlim" value="-0.7854" />
-  <xacro:property name="fr_hip_sagittal_uplim" value="0" />
-  <xacro:property name="fl_hip_sagittal_ipos" value="-1.0472" />
-  <xacro:property name="fl_hip_sagittal_lowlim" value="0" />
-  <xacro:property name="fl_hip_sagittal_uplim" value="0.7854" />
+  <xacro:property name="r_hip_sagittal_ipos" value="-1.8326" />
+  <xacro:property name="r_hip_sagittal_lowlim" value="-0.7854" />
+  <xacro:property name="r_hip_sagittal_uplim" value="0" />
+  <xacro:property name="l_hip_sagittal_ipos" value="-1.309" />
+  <xacro:property name="l_hip_sagittal_lowlim" value="0" />
+  <xacro:property name="l_hip_sagittal_uplim" value="0.7854" />
 
-  <xacro:property name="br_hip_sagittal_ipos" value="-2.356" />
-  <xacro:property name="br_hip_sagittal_lowlim" value="-0.7854" />
-  <xacro:property name="br_hip_sagittal_uplim" value="0" />
-  <xacro:property name="bl_hip_sagittal_ipos" value="-0.7854" />
-  <xacro:property name="bl_hip_sagittal_lowlim" value="0" />
-  <xacro:property name="bl_hip_sagittal_uplim" value="0.7854" />
 
   <joint name="RF_HFE" type="revolute">
     <parent link="RF_hip"/>
     <child link="RF_thigh"/>
-    <origin rpy="-1.5708 ${fr_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${fr_hip_sagittal_lowlim}" upper="${fr_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_HFE" type="revolute">
     <parent link="LF_hip"/>
     <child link="LF_thigh"/>
-    <origin rpy="-1.5708 ${fl_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${l_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0 0.0 ${l_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${fl_hip_sagittal_lowlim}" upper="${fl_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LH_HFE" type="revolute">
     <parent link="LH_hip"/>
     <child link="LH_thigh"/>
-    <origin rpy="-1.5708 ${bl_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${l_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0.0 ${l_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${bl_hip_sagittal_lowlim}" upper="${bl_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="RH_HFE" type="revolute">
     <parent link="RH_hip"/>
     <child link="RH_thigh"/>
-    <origin rpy="-1.5708 ${br_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${br_hip_sagittal_lowlim}" upper="${br_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
 
 
-  <xacro:property name="r_knee_ipos" value="-2.4113" />  
-  <xacro:property name="r_knee_lowlim" value="-0." />
+  <xacro:property name="r_knee_ipos" value="-1.9431" />  
+  <xacro:property name="r_knee_lowlim" value="0" />
   <xacro:property name="r_knee_uplim" value="1.0472" />
-  <xacro:property name="l_knee_ipos" value="2.4113" />
+  <xacro:property name="l_knee_ipos" value="1.9431" />
   <xacro:property name="l_knee_lowlim" value="-1.0472" />
-  <xacro:property name="l_knee_uplim" value="0." />
+  <xacro:property name="l_knee_uplim" value="0" />
 
   <joint name="RF_KFE" type="revolute">
     <parent link="RF_thigh"/>
@@ -210,10 +197,10 @@
 
   <!--ANKLES-->
 
-  <xacro:property name="l_ankle_lowlim" value="-1.5708" />
-  <xacro:property name="l_ankle_uplim" value="1.5708" />
-  <xacro:property name="r_ankle_lowlim" value="-1.5708" />
-  <xacro:property name="r_ankle_uplim" value="1.5708" />
+  <xacro:property name="l_ankle_lowlim" value="-0.65" />
+  <xacro:property name="l_ankle_uplim" value="0.92" />
+  <xacro:property name="r_ankle_lowlim" value="-0.92" />
+  <xacro:property name="r_ankle_uplim" value="0.65" />
 
   <!--REAL FOOT SECTION 1/3 (COMMENT THIS IN, COMMENT BELOW OUT)-->
   <joint name="RF_ankle" type="revolute">
@@ -333,7 +320,13 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.4 0.3 0.38"/>
+        <box size="0.3 0.1 0.12"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -.14"/>
+      <geometry>
+        <box size="0.3 0.04 0.16"/>
       </geometry>
     </collision>
     <visual name="base_visual">

@@ -7,16 +7,21 @@
 -Tests to resolve 'recalculations' error:
 	-Kp 350 -> 10, Kd 37 -> 0 in task.info swingLegTask
 		-ERROR
-	-change urdf so the robot starts lying on the ground (feet not needed for support)
-		-as per chenghao
-		-ERROR
-	-change all joint initial posiitons to avoid calculations near 0 (husky_crouching)
-		-change defaultJointState in reference.info
+	-husky_crouching
+		-change urdf so the robot starts lying on the ground (feet not needed for support)
+			-chenghao's advice
 			-ERROR
-		-change initialState in task.info to defaultJointState
+		-change all joint initial posiitons to avoid calculations near 0
+			-change defaultJointState in reference.info
+				-ERROR
+			-change initialState in task.info to defaultJointState
+				-ERROR
+	-Husky_crouching_no_fin
+		-remove fin
 			-ERROR
-	-Husky_crouching_no_fin, hips are thicc
-		
+		-add feet back
+			-ERROR
+		-add whole feet?
 
 To launch husky_description:
 	

@@ -15,7 +15,28 @@
     </include>
     
     <!-- push robot_description to factory and spawn robot in gazebo -->
+    <!--0.42 for standing with feet, 0.37 for standing no feet, .05 for crouching-->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
-          args="-z 0.42 -param legged_robot_description -urdf -model $(arg robot_type)" output="screen"/>
+        args="-z 0.37 -param legged_robot_description -urdf -model $(arg robot_type)" output="screen"/>
+        
+    <!--spawn bars
+    <group ns="bar1">
+        <param name="bar_description" command="cat $(find husky_description)/urdf/bar.urdf"/> 
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
+          args="-y 0.25 -z 0.25 -param bar_description -urdf -model bar1" output="screen"/>
+    </group>
+    
+    <group ns="bar2">
+        <param name="bar_description" command="cat $(find husky_description)/urdf/bar.urdf"/> 
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
+          args="-y -0.25 -z 0.25 -param bar_description -urdf -model bar2" output="screen"/>
+    </group>
 
+    <group ns="bar3">
+        <param name="bar_description" command="cat $(find husky_description)/urdf/bar.urdf"/> 
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
+          args="-x -.5 -z 0.25 -Y 1.5708 -param bar_description -urdf -model bar3" output="screen"/>
+    </group>
+    -->     
+    
 </launch>
