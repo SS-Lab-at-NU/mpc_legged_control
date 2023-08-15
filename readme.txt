@@ -22,6 +22,11 @@
 		-add feet back
 			-ERROR
 		-add whole feet?
+	-husky aug 15:
+		adding on to chenghao's changes
+		added pid for feet
+		task.info changed feet friction
+		task.info changed phase transisition time
 
 To launch husky_description:
 	

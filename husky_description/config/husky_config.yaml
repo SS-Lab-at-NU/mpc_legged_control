@@ -7,3 +7,10 @@ gazebo:
       orientation_covariance_diagonal: [ 0.0012, 0.0012, 0.0012 ]
       angular_velocity_covariance: [ 0.0004, 0.0004, 0.0004 ]
       linear_acceleration_covariance: [ 0.01, 0.01, 0.01 ]
+      
+gazebo_ros_control:
+  pid_gains:
+    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
+    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
+    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
+    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
