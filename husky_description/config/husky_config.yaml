@@ -10,7 +10,9 @@ gazebo:
       
 gazebo_ros_control:
   pid_gains:
-    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
-    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
-    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
-    RF_foot_fixed_mimic: {p: 5, i: 0.5, d: .5, i_clamp_min: -350, i_clamp_max: 350, antiwindup: false, publish_state: false}
+    
+    #for mimic joint (does not work due to hardware interface being used by WBC)
+    RF_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
+    LF_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
+    RH_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
+    LH_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}

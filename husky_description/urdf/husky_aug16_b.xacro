@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="husky">
 
-  <!--aug 17 husky a, fixed inertias, fixedJointLumping, joint Limits-->
+  <!--aug 16 husky b, fixed inertias, fixedJointLumping, joint Limits-->
 
   <xacro:arg name="robot_type" default="husky"/>
 
@@ -14,11 +14,11 @@
   <xacro:property name="efflim" value="33.5" />
 
   <xacro:property name="r_hip_frontal_ipos" value="${-10*pi/180}" />
-  <xacro:property name="r_hip_frontal_lowlim" value="${-5*pi/180}" />
-  <xacro:property name="r_hip_frontal_uplim" value="0" />
+  <xacro:property name="r_hip_frontal_lowlim" value="0" />
+  <xacro:property name="r_hip_frontal_uplim" value="${12.5*pi/180}" />
   <xacro:property name="l_hip_frontal_ipos" value="${-170*pi/180}" />
-  <xacro:property name="l_hip_frontal_lowlim" value="0" />
-  <xacro:property name="l_hip_frontal_uplim" value="${5*pi/180}" />
+  <xacro:property name="l_hip_frontal_lowlim" value="${-12.5*pi/180}" />
+  <xacro:property name="l_hip_frontal_uplim" value="0" />
 
   <xacro:property name="r_axis" value="1" />
   <xacro:property name="l_axis" value="1" />
@@ -104,6 +104,8 @@
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
     <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
+
+
 
   <xacro:property name="fr_hip_sagittal_ipos" value="${-121.61*pi/180}" />
   <xacro:property name="fr_hip_sagittal_lowlim" value="${-12*pi/180}" />
@@ -265,6 +267,36 @@
     <child link="RH_FOOT"/>
     <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
   </joint>
+  -->
+  <!--REAL FOOT SECTION END-->
+
+  <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
+  <!--
+  <joint name="RF_foot_fixed" type="fixed">
+    <parent link="RF_calf"/>
+    <child link="RF_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="LF_foot_fixed" type="fixed">
+    <parent link="LF_calf"/>
+    <child link="LF_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="LH_foot_fixed" type="fixed">
+    <parent link="LH_calf"/>
+    <child link="LH_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="RH_foot_fixed" type="fixed">
+    <parent link="RH_calf"/>
+    <child link="RH_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  -->
+  <!--NUB FOOT SECTION END-->
 
   <gazebo reference="RF_foot_fixed">
     <disableFixedJointLumping>false</disableFixedJointLumping>
@@ -854,6 +886,19 @@
     <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
+  -->
+  <!--REAL FOOT SECTION END-->
+  
+  <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
+  <!--
+  <xacro:property name="foot_ix" value="0.01" />
+  <xacro:property name="foot_length" value="0.16" />
+  <xacro:property name="foot_radius" value="0.01" />
+   
+  <xacro:property name="foot_sphere_ix" value="0.342" />
+  <xacro:property name="foot_sphere_radius" value="0.02" />
+  -->
+  <!--NUB FOOT SECTION END-->
 
   <link name="RF_FOOT">
     <inertial>
@@ -941,6 +986,7 @@
   </gazebo>
   
   <!--CONTROL ROD SECTION 1/2-->
+  <!--
   <joint name="fr_control_rod" type="revolute">
     <parent link="RF_thigh"/>
     <child link="fr_fibula"/>
@@ -977,20 +1023,16 @@
     <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="fibula_ix" value="0.14" />
-  <xacro:property name="fibula_length" value="0.24" />
-  <xacro:property name="fibula_radius" value="0.01" />
-
   <link name="fr_fibula">
     <inertial>
       <mass value="0.0281"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
       <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="fr_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="fr_fibula_visual">
@@ -1010,10 +1052,10 @@
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
       <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="fl_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="fl_fibula_visual">
@@ -1033,10 +1075,10 @@
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
       <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="bl_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="bl_fibula_visual">
@@ -1054,12 +1096,12 @@
     <inertial>
       <mass value="0.0281"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
-      <inertia ixx="1.2129e-06" ixy="-0.0" ixz="0" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
+      <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="br_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="br_fibula_visual">
@@ -1357,7 +1399,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
@@ -1368,7 +1410,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
@@ -1379,7 +1421,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
@@ -1390,7 +1432,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   

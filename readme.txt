@@ -27,6 +27,12 @@
 		added pid for feet
 		task.info changed feet friction
 		task.info changed phase transisition time
+	-husky aug 16:
+		a
+			finished updating inertias
+			disableFixedJointLumping = true to stop sliding
+		b
+			fix joints
 
 To launch husky_description:
 	

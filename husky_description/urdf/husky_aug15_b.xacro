@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="husky">
 
-  <!--aug 17 husky a, fixed inertias, fixedJointLumping, joint Limits-->
+  <!--aug 15 husky b, using chenghao's inertias-->
 
   <xacro:arg name="robot_type" default="husky"/>
 
@@ -14,11 +14,12 @@
   <xacro:property name="efflim" value="33.5" />
 
   <xacro:property name="r_hip_frontal_ipos" value="${-10*pi/180}" />
-  <xacro:property name="r_hip_frontal_lowlim" value="${-5*pi/180}" />
-  <xacro:property name="r_hip_frontal_uplim" value="0" />
+  <xacro:property name="r_hip_frontal_lowlim" value="${0}" />
+  <xacro:property name="r_hip_frontal_uplim" value="${0}" />
   <xacro:property name="l_hip_frontal_ipos" value="${-170*pi/180}" />
-  <xacro:property name="l_hip_frontal_lowlim" value="0" />
-  <xacro:property name="l_hip_frontal_uplim" value="${5*pi/180}" />
+  <xacro:property name="l_hip_frontal_lowlim" value="${0}" />
+  <xacro:property name="l_hip_frontal_uplim" value="${0}" />
+
 
   <xacro:property name="r_axis" value="1" />
   <xacro:property name="l_axis" value="1" />
@@ -105,62 +106,57 @@
     <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="fr_hip_sagittal_ipos" value="${-121.61*pi/180}" />
-  <xacro:property name="fr_hip_sagittal_lowlim" value="${-12*pi/180}" />
-  <xacro:property name="fr_hip_sagittal_uplim" value="0" />
-  <xacro:property name="fl_hip_sagittal_ipos" value="${-58.39*pi/180}" />
-  <xacro:property name="fl_hip_sagittal_lowlim" value="0" />
-  <xacro:property name="fl_hip_sagittal_uplim" value="${12*pi/180}" />
+  <xacro:property name="r_hip_sagittal_ipos" value="${-105*pi/180}" />
+  <xacro:property name="r_hip_sagittal_lowlim" value="${-30*pi/180}" />
+  <xacro:property name="r_hip_sagittal_uplim" value="0" />
+  <xacro:property name="l_hip_sagittal_ipos" value="${-75*pi/180}" />
+  <xacro:property name="l_hip_sagittal_lowlim" value="0" />
+  <xacro:property name="l_hip_sagittal_uplim" value="${30*pi/180}" />
 
-  <xacro:property name="br_hip_sagittal_ipos" value="${-131.32*pi/180}" />
-  <xacro:property name="br_hip_sagittal_lowlim" value="${-12*pi/180}" />
-  <xacro:property name="br_hip_sagittal_uplim" value="0" />
-  <xacro:property name="bl_hip_sagittal_ipos" value="${-48.68*pi/180}" />
-  <xacro:property name="bl_hip_sagittal_lowlim" value="0" />
-  <xacro:property name="bl_hip_sagittal_uplim" value="${12*pi/180}" />
 
   <joint name="RF_HFE" type="revolute">
     <parent link="RF_hip"/>
     <child link="RF_thigh"/>
-    <origin rpy="-1.5708 ${fr_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${fr_hip_sagittal_lowlim}" upper="${fr_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LF_HFE" type="revolute">
     <parent link="LF_hip"/>
     <child link="LF_thigh"/>
-    <origin rpy="-1.5708 ${fl_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${l_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0 0.0 ${l_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${fl_hip_sagittal_lowlim}" upper="${fl_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="LH_HFE" type="revolute">
     <parent link="LH_hip"/>
     <child link="LH_thigh"/>
-    <origin rpy="-1.5708 ${bl_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${l_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0.0 ${l_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${bl_hip_sagittal_lowlim}" upper="${bl_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${l_hip_sagittal_lowlim}" upper="${l_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
   
   <joint name="RH_HFE" type="revolute">
     <parent link="RH_hip"/>
     <child link="RH_thigh"/>
-    <origin rpy="-1.5708 ${br_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
+    <origin rpy="-1.5708 ${r_hip_sagittal_ipos} -1.5708"   xyz="0.1031 0.0 0.0"/>
     <axis xyz="0.0 0 ${r_axis}" />
     <dynamics damping="${motor_damping}" friction="${motor_sfriction}"/>
-    <limit effort="${efflim}" lower="${br_hip_sagittal_lowlim}" upper="${br_hip_sagittal_uplim}" velocity="8.7267"/>
+    <limit effort="${efflim}" lower="${r_hip_sagittal_lowlim}" upper="${r_hip_sagittal_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="r_knee_ipos" value="${-138.16*pi/180}" />  
-  <xacro:property name="r_knee_lowlim" value="-0" />
-  <xacro:property name="r_knee_uplim" value="${60*pi/180}" />
-  <xacro:property name="l_knee_ipos" value="${138.16*pi/180}" />
-  <xacro:property name="l_knee_lowlim" value="${-60*pi/180}" />
-  <xacro:property name="l_knee_uplim" value="0" />
+
+  <xacro:property name="r_knee_ipos" value="-2.4113" />  
+  <xacro:property name="r_knee_lowlim" value="-0." />
+  <xacro:property name="r_knee_uplim" value="1.0472" />
+  <xacro:property name="l_knee_ipos" value="2.4113" />
+  <xacro:property name="l_knee_lowlim" value="-1.0472" />
+  <xacro:property name="l_knee_uplim" value="0." />
 
   <joint name="RF_KFE" type="revolute">
     <parent link="RF_thigh"/>
@@ -200,10 +196,10 @@
 
   <!--ANKLES-->
 
-  <xacro:property name="l_ankle_lowlim" value="${-90*pi/180}" />
-  <xacro:property name="l_ankle_uplim" value="${90*pi/180}" />
-  <xacro:property name="r_ankle_lowlim" value="${-90*pi/180}" />
-  <xacro:property name="r_ankle_uplim" value="${90*pi/180}" />
+  <xacro:property name="l_ankle_lowlim" value="-1.5708" />
+  <xacro:property name="l_ankle_uplim" value="1.5708" />
+  <xacro:property name="r_ankle_lowlim" value="-1.5708" />
+  <xacro:property name="r_ankle_uplim" value="1.5708" />
 
   <!--REAL FOOT SECTION 1/3 (COMMENT THIS IN, COMMENT BELOW OUT)-->
   <joint name="RF_ankle" type="revolute">
@@ -265,21 +261,51 @@
     <child link="RH_FOOT"/>
     <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
   </joint>
+  -->
+  <!--REAL FOOT SECTION END-->
+
+  <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
+  <!--
+  <joint name="RF_foot_fixed" type="fixed">
+    <parent link="RF_calf"/>
+    <child link="RF_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="LF_foot_fixed" type="fixed">
+    <parent link="LF_calf"/>
+    <child link="LF_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="LH_foot_fixed" type="fixed">
+    <parent link="LH_calf"/>
+    <child link="LH_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="RH_foot_fixed" type="fixed">
+    <parent link="RH_calf"/>
+    <child link="RH_FOOT"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  -->
+  <!--NUB FOOT SECTION END-->
 
   <gazebo reference="RF_foot_fixed">
-    <disableFixedJointLumping>false</disableFixedJointLumping>
+    <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
 
   <gazebo reference="LF_foot_fixed">
-    <disableFixedJointLumping>false</disableFixedJointLumping>
+    <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
 
   <gazebo reference="LH_foot_fixed">
-    <disableFixedJointLumping>false</disableFixedJointLumping>
+    <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
 
   <gazebo reference="RH_foot_fixed">
-    <disableFixedJointLumping>false</disableFixedJointLumping>
+    <disableFixedJointLumping>true</disableFixedJointLumping>
   </gazebo>
   
 
@@ -287,7 +313,7 @@
   <link name="base">
     <inertial>
       <mass value="3.1895"/> 
-      <origin rpy="0.0 0.0 -1.5708" xyz="-0.0301 0 0.0241"/>
+      <origin rpy="0.0 0.0 -1.5708" xyz="-0.0301 -0.0001 0.0241"/>
       <inertia ixx="0.0170990623" ixy="3.09e-08" ixz="-5.394e-07" iyy="0.0115476717" iyz="4.77948e-05" izz="0.0268461573"/>
     </inertial>
     <collision>
@@ -297,9 +323,9 @@
       </geometry>
     </collision>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 -0.1"/>
+      <origin rpy="0 0 0" xyz="0.1 0 -0.1"/>
       <geometry>
-        <box size="0.3 0.1 0.28"/>
+        <box size="0.16 0.1 0.28"/>
       </geometry>
     </collision>
     <visual name="base_visual">
@@ -320,7 +346,7 @@
   <link name="RF_hip">
     <inertial>
       <mass value="0.295"/>
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0 0"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="0.000402747" ixy="8.709e-06" ixz="-2.97e-07" iyy="0.000691123" iyz="5.45e-07" izz="0.000487919"/>
     </inertial>
     <collision>
@@ -343,7 +369,7 @@
   <link name="LF_hip">
     <inertial>
       <mass value="0.295"/>
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0 0"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="0.000402747" ixy="8.709e-06" ixz="-2.97e-07" iyy="0.000691123" iyz="5.45e-07" izz="0.000487919"/>
     </inertial>
     <collision>
@@ -366,7 +392,7 @@
   <link name="LH_hip">
     <inertial>
       <mass value="0.295"/>
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0 0"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="0.000402747" ixy="8.709e-06" ixz="-2.97e-07" iyy="0.000691123" iyz="5.45e-07" izz="0.000487919"/>
     </inertial>
     <collision>
@@ -389,7 +415,7 @@
   <link name="RH_hip">
     <inertial>
       <mass value="0.295"/>
-      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0 0"/>
+      <origin rpy="3.1416 0.0 0.0" xyz="0.0236 0.0001 0.003"/>
       <inertia ixx="0.000402747" ixy="8.709e-06" ixz="-2.97e-07" iyy="0.000691123" iyz="5.45e-07" izz="0.000487919"/>
     </inertial>
     <collision>
@@ -447,7 +473,7 @@
     <inertial>
       <mass value="0.3189"/> 
       <origin rpy="0 ${90/180*pi} 0" xyz="0.1027 0.0 0.0"/>
-      <inertia ixx="0.0008" ixy="0" ixz="0" iyy="0.0007" iyz="0" izz="0.0005"/>
+      <inertia ixx="0.005251806" ixy="2.168e-06" ixz="0.000346889" iyy="0.005000475" iyz="2.8174e-05" izz="0.0011102"/>
     </inertial>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 ${femur_n1_iz}"/>
@@ -482,7 +508,7 @@
     <inertial>
       <mass value="0.3189"/> 
       <origin rpy="0.0 ${90/180*pi} 0.0" xyz="0.1027 0.0 0.0"/>
-      <inertia ixx="0.0008" ixy="0" ixz="0" iyy="0.0007" iyz="0" izz="0.0005"/>
+      <inertia ixx="0.005251806" ixy="2.168e-06" ixz="0.000346889" iyy="0.005000475" iyz="2.8174e-05" izz="0.0011102"/>
     </inertial>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 ${femur_n1_iz}"/>
@@ -517,7 +543,7 @@
     <inertial>
       <mass value="0.3189"/> 
       <origin rpy="0.0 ${90/180*pi} 0.0" xyz="0.1027 0.0 0.0"/>
-      <inertia ixx="0.0008" ixy="0" ixz="0" iyy="0.0007" iyz="0" izz="0.0005"/>
+      <inertia ixx="0.005251806" ixy="2.168e-06" ixz="0.000346889" iyy="0.005000475" iyz="2.8174e-05" izz="0.0011102"/>
     </inertial>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 ${femur_n1_iz}"/>
@@ -552,7 +578,7 @@
     <inertial>
       <mass value="0.3189"/> 
       <origin rpy="0.0 ${90/180*pi} 0.0" xyz="0.1027 0.0 0.0"/>
-      <inertia ixx="0.0008" ixy="0" ixz="0" iyy="0.0007" iyz="0" izz="0.0005"/>
+      <inertia ixx="0.005251806" ixy="2.168e-06" ixz="0.000346889" iyy="0.005000475" iyz="2.8174e-05" izz="0.0011102"/>
     </inertial>
     <collision>
       <origin rpy="0.0 0.0 0.0" xyz="0 0 ${femur_n1_iz}"/>
@@ -623,8 +649,8 @@
   <link name="RF_calf">
     <inertial>
       <mass value="0.151"/>
-      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 0"/>
-      <inertia ixx="0.0008" ixy="0.0" ixz="0" iyy="0.0008" iyz="0.0" izz=".00001"/>
+      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 -0.0029"/>
+      <inertia ixx="0.002344758" ixy="0.0" ixz="-0.000141275" iyy="0.002360755" iyz="0.0" izz="3.1158e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${tibia_ix} 0 0"/>
@@ -646,8 +672,8 @@
   <link name="LF_calf">
     <inertial>
       <mass value="0.151"/>
-      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 0"/>
-      <inertia ixx="0.0008" ixy="0.0" ixz="0" iyy="0.0008" iyz="0.0" izz=".00001"/>
+      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 -0.0029"/>
+      <inertia ixx="0.002344758" ixy="0.0" ixz="-0.000141275" iyy="0.002360755" iyz="0.0" izz="3.1158e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${tibia_ix} 0 0"/>
@@ -669,8 +695,8 @@
   <link name="LH_calf">
     <inertial>
       <mass value="0.151"/>
-      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 0"/>
-      <inertia ixx="0.0008" ixy="0.0" ixz="0" iyy="0.0008" iyz="0.0" izz=".00001"/>
+      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 -0.0029"/>
+      <inertia ixx="0.002344758" ixy="0.0" ixz="-0.000141275" iyy="0.002360755" iyz="0.0" izz="3.1158e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${tibia_ix} 0 0"/>
@@ -692,8 +718,8 @@
   <link name="RH_calf">
     <inertial>
       <mass value="0.151"/>
-      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 0"/>
-      <inertia ixx="0.0008" ixy="0.0" ixz="0" iyy="0.0008" iyz="0.0" izz=".00001"/>
+      <origin rpy="0 ${90/180*pi} 0" xyz="0.15 0.0 -0.0029"/>
+      <inertia ixx="0.002344758" ixy="0.0" ixz="-0.000141275" iyy="0.002360755" iyz="0.0" izz="3.1158e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${tibia_ix} 0 0"/>
@@ -746,7 +772,7 @@
     <inertial>
       <mass value="0.0716"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.0528 -0.0 0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="0" izz="4.65431e-05"/>
+      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
@@ -769,7 +795,7 @@
     <inertial>
       <mass value="0.0716"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.0528 0.0 -0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="0" izz="4.65431e-05"/>
+      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
@@ -792,7 +818,7 @@
     <inertial>
       <mass value="0.0716"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.0528 0.0 -0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="0" izz="4.65431e-05"/>
+      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
@@ -815,7 +841,7 @@
     <inertial>
       <mass value="0.0716"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.0528 0.0 0.0"/>
-      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="0" izz="4.65431e-05"/>
+      <inertia ixx="9.7391e-06" ixy="0.0" ixz="-0.0" iyy="4.80545e-05" iyz="-3e-09" izz="4.65431e-05"/>
     </inertial>
     <collision>
       <origin rpy="0.0 1.5708 0.0" xyz="${foot_ix} 0 0"/>
@@ -854,6 +880,19 @@
     <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
+  -->
+  <!--REAL FOOT SECTION END-->
+  
+  <!--NUB FOOT SECTION (COMMENT THIS IN, COMMENT ABOVE OUT)-->
+  <!--
+  <xacro:property name="foot_ix" value="0.01" />
+  <xacro:property name="foot_length" value="0.16" />
+  <xacro:property name="foot_radius" value="0.01" />
+   
+  <xacro:property name="foot_sphere_ix" value="0.342" />
+  <xacro:property name="foot_sphere_radius" value="0.02" />
+  -->
+  <!--NUB FOOT SECTION END-->
 
   <link name="RF_FOOT">
     <inertial>
@@ -939,8 +978,106 @@
     <kp value="1000000.0"/>
     <kd value="100.0"/>
   </gazebo>
+ 
+<!--dummy foot joint for friction, it does not work-->
+<!--  
+  <joint name="RF_footj2" type="fixed">
+    <parent link="RF_FOOT"/>
+    <child link="RF_FOOT2"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="LF_footj2" type="fixed">
+    <parent link="LF_FOOT"/>
+    <child link="LF_FOOT2"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="LH_footj2" type="fixed">
+    <parent link="LH_FOOT"/>
+    <child link="LH_FOOT2"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="RH_footj2" type="fixed">
+    <parent link="RH_FOOT"/>
+    <child link="RH_FOOT2"/>
+    <origin rpy="0 0 0"   xyz="0.0 0.0 0.0"/>
+  </joint>  
+  
+  <link name="RF_FOOT2">
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius=".025"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="LF_FOOT2">
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius=".025"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="LH_FOOT2">
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius=".025"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="RH_FOOT2">
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius=".025"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <gazebo reference="RF_FOOT2">
+    <mu1>0.9</mu1>
+    <mu2>0.9</mu2>
+    <self_collide>0</self_collide>
+    <material>Gazebo/DarkGrey</material>
+    <kp value="1000000.0"/>
+    <kd value="100.0"/>
+  </gazebo>
+  <gazebo reference="LF_FOOT2">
+    <mu1>0.9</mu1>
+    <mu2>0.9</mu2>
+    <self_collide>0</self_collide>
+    <material>Gazebo/DarkGrey</material>
+    <kp value="1000000.0"/>
+    <kd value="100.0"/>
+  </gazebo>
+  <gazebo reference="LH_FOOT2">
+    <mu1>0.9</mu1>
+    <mu2>0.9</mu2>
+    <self_collide>0</self_collide>
+    <material>Gazebo/DarkGrey</material>
+    <kp value="1000000.0"/>
+    <kd value="100.0"/>
+  </gazebo>
+  <gazebo reference="RH_FOOT2">
+    <mu1>0.9</mu1>
+    <mu2>0.9</mu2>
+    <self_collide>0</self_collide>
+    <material>Gazebo/DarkGrey</material>
+    <kp value="1000000.0"/>
+    <kd value="100.0"/>
+  </gazebo>
+  -->
+  <!--dummy foot joint for friction-->  
   
   <!--CONTROL ROD SECTION 1/2-->
+  <!--
   <joint name="fr_control_rod" type="revolute">
     <parent link="RF_thigh"/>
     <child link="fr_fibula"/>
@@ -977,20 +1114,16 @@
     <limit effort="${efflim}" lower="${r_knee_lowlim}" upper="${r_knee_uplim}" velocity="8.7267"/>
   </joint>
 
-  <xacro:property name="fibula_ix" value="0.14" />
-  <xacro:property name="fibula_length" value="0.24" />
-  <xacro:property name="fibula_radius" value="0.01" />
-
   <link name="fr_fibula">
     <inertial>
       <mass value="0.0281"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
       <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="fr_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="fr_fibula_visual">
@@ -1010,10 +1143,10 @@
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
       <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="fl_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="fl_fibula_visual">
@@ -1033,10 +1166,10 @@
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
       <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="bl_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="bl_fibula_visual">
@@ -1054,12 +1187,12 @@
     <inertial>
       <mass value="0.0281"/> 
       <origin rpy="0.0 0.0 0.0" xyz="0.173 -0.0 -0.0001"/>
-      <inertia ixx="1.2129e-06" ixy="-0.0" ixz="0" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
+      <inertia ixx="1.2129e-06" ixy="-0.0" ixz="-4.5e-08" iyy="4.02491e-05" iyz="0.0" izz="4.07848e-05"/>
     </inertial>
-    <collision>
-      <origin rpy="0.0 1.5708 0.0" xyz="${fibula_ix} 0 0"/>
+    <collision name="br_fibula_collision">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <cylinder length="${fibula_length}" radius="${fibula_radius}"/>
+        <mesh filename="package://husky_description/meshes/fr_fibula.STL" scale="1 1 1"/>
       </geometry>
     </collision>
     <visual name="br_fibula_visual">
@@ -1209,7 +1342,7 @@
     </actuator>
   </transmission>
   
-  <!--REAL FOOT SECTION 3/3
+  <!--REAL FOOT SECTION 3/3 (COMMENT THIS IN, NO NEED TO COMMENT OUT)-->
   <transmission name="RF_ankle_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="RF_ankle">
@@ -1357,7 +1490,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
@@ -1368,7 +1501,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
@@ -1379,7 +1512,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
@@ -1390,7 +1523,7 @@
     <multiplier>1</multiplier>
     <offset>0</offset>
     <sensitiveness>0</sensitiveness>
-    <maxEffort>15</maxEffort> 
+    <maxEffort>1000</maxEffort> 
     <robotNamespace>/</robotNamespace>
   </plugin>
   
