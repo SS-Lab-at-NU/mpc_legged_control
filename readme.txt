@@ -1,61 +1,33 @@
--attempt5 at modifying qianyuanliao controller for husky
--models from qiayuanliao4:
-	-husky_hobbler.xacro (can hobble on the ground)
-	-husky_defined1.xacro (easy to add and remove feet)
-	-husky_midpoint.xacro (joints start in middle of range)
-	-launch file loads husky.xacro (husky.xacro is a copy of husky_midpoint, with feet activated)
--Tests to resolve 'recalculations' error:
-	-Kp 350 -> 10, Kd 37 -> 0 in task.info swingLegTask
-		-ERROR
-	-husky_crouching
-		-change urdf so the robot starts lying on the ground (feet not needed for support)
-			-chenghao's advice
-			-ERROR
-		-change all joint initial posiitons to avoid calculations near 0
-			-change defaultJointState in reference.info
-				-ERROR
-			-change initialState in task.info to defaultJointState
-				-ERROR
-	-Husky_crouching_no_fin
-		-remove fin
-			-ERROR
-		-add feet back
-			-ERROR
-		-add whole feet?
-	-husky aug 15:
-		adding on to chenghao's changes
-		added pid for feet
-		task.info changed feet friction
-		task.info changed phase transisition time
-	-husky aug 16:
-		a
-			finished updating inertias
-			disableFixedJointLumping = true to stop sliding
-		b
-			fix joints
+-husky7, same as husky5 but with some tweaks
+	changes to ocs2_robotic_examples/ocs2_legged_robot_ros/src/gait
+
 
 To launch husky_description:
 	
 Terminal 1:
-source ~/qiayuanliao_ws5/devel/setup.bash
+source ~/qiayuanliao_ws7/devel/setup.bash
 set-title "gazebo"
 roslaunch husky_description husky_world.launch
 
 Terminal 2:
-source ~/qiayuanliao_ws5/devel/setup.bash
+source ~/qiayuanliao_ws7/devel/setup.bash
 set-title "load ctrl"
 export ROBOT_TYPE=husky
 roslaunch legged_controllers load_controller.launch cheater:=false
 
+unpause gazebo
+
 Terminal 3:
 set-title "start ctrl"
-/home/franksl/qiayuanliao_ws5/src/mpc_legged_control/scripts/start_controller.py
+/home/franksl/qiayuanliao_ws7/src/mpc_legged_control/scripts/start_controller.py
 
 Terminal 4:
 set-title "rqt_gui"
 rosrun rqt_gui rqt_gui
 
-
+Terminal 5:
+set-title "keyboard"
+/home/franksl/qiayuanliao_ws7/src/mpc_legged_control/scripts/keyboard_control.py
 
 To close gzserver:
 killall -9 gzserver

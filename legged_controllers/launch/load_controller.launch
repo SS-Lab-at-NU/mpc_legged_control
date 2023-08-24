@@ -1,34 +1,43 @@
 <?xml version="1.0" ?>
 
+<!-- This XML launch file is used to configure and launch ROS nodes for controlling a legged robot. -->
+
 <launch>
+
+    <!-- Define an argument 'robot_type' which can be set externally. Default value is fetched from the environment variable 'ROBOT_TYPE'. -->
     <arg name="robot_type" default="$(env ROBOT_TYPE)" doc="Robot type: [a1, aliengo, go1, laikago]"/>
 
+    <!-- Define an argument 'cheater' with default value 'false'. Make sure to set the argument 'cheater' to 'true' in the command while running this launch file-->
     <arg name="cheater" default="false"/>
 
-    <!-- make the files into global parameters -->
+    <!-- Set various parameters that point to URDF and configuration files for the robot control. -->
     <param name="urdfFile" value="/tmp/legged_control/$(arg robot_type).urdf"/>
     <param name="taskFile" value="$(find legged_controllers)/config/$(arg robot_type)/task.info"/>
     <param name="referenceFile" value="$(find legged_controllers)/config/$(arg robot_type)/reference.info"/>
     <param name="gaitCommandFile" value="$(find legged_controllers)/config/$(arg robot_type)/gait.info"/>
 
+    <!-- Load ROS parameters from a YAML file named 'controllers.yaml'. -->
     <rosparam file="$(find legged_controllers)/config/controllers.yaml" command="load"/>
 
+    <!-- Load controller nodes based on the 'cheater' argument. -->
+    <!-- If 'cheater' is true, load an additional cheater controller node. -->     
     <node if="$(arg cheater)" name="controller_loader" pkg="controller_manager" type="controller_manager"
           output="screen" args="load
           controllers/joint_state_controller
           controllers/legged_controller
           controllers/legged_cheater_controller
 "/>
-
+    <!-- If 'cheater' is false, load the standard controller nodes. -->
     <node unless="$(arg cheater)" name="controller_loader" pkg="controller_manager" type="controller_manager"
           output="screen" args="load
           controllers/joint_state_controller
           controllers/legged_controller
 "/>
-
+    <!-- Launch a node to send gait commands for the legged robot. -->
     <node pkg="ocs2_legged_robot_ros" type="legged_robot_gait_command" name="legged_robot_gait_command"
           output="screen"/>
-
+          
+    <!-- Launch a node to publish target trajectories for the legged robot. -->
     <node pkg="legged_controllers" type="legged_target_trajectories_publisher" name="legged_robot_target"
           output="screen"/>
 </launch>
