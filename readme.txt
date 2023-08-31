@@ -1,5 +1,13 @@
 -husky7, same as husky5 but with some tweaks
-	changes to ocs2_robotic_examples/ocs2_legged_robot_ros/src/gait
+	trying to make the stance controllable by keyboard
+		changes to ocs2_robotic_examples/ocs2_legged_robot_ros/src/gait
+	trying to fix an rviz display error, mimic joints not updating
+		attempt did not work
+		added rviz publishers to launch file
+		created joint spoofer in scripts, did not work
+		implemented hussain's joint spoofer (temporarily paused)
+	ardupilot
+		implemented, and implemented switching as per below
 
 
 To launch husky_description:
@@ -18,20 +26,49 @@ roslaunch legged_controllers load_controller.launch cheater:=false
 unpause gazebo
 
 Terminal 3:
-set-title "start ctrl"
-/home/franksl/qiayuanliao_ws7/src/mpc_legged_control/scripts/start_controller.py
+set-title "arducopter"
+cd ~/ardupilot/ArduCopter/
+../Tools/autotest/sim_vehicle.py -f gazebo-iris --console
+
+Terminal 3:
+set-title "stop pos"
+cd
+cd qiayuanliao_ws7/src/mpc_legged_control/scripts
+./control_pos_stop.py
 
 Terminal 4:
+set-title "start wbc"
+cd qiayuanliao_ws7/src/mpc_legged_control/scripts
+./control_wbc_start.py
+
+Terminal 5:
 set-title "rqt_gui"
 rosrun rqt_gui rqt_gui
 
-Terminal 5:
+Terminal 6:
 set-title "keyboard"
 /home/franksl/qiayuanliao_ws7/src/mpc_legged_control/scripts/keyboard_control.py
+
+
+Arducopter Notes:
+
+launch iris description:
+gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
+
+mode GUIDED
+arm throttle
+takeoff 2
+
 
 To close gzserver:
 killall -9 gzserver
 
+
+Sources:
+https://github.com/ArduPilot/ardupilot_gazebo
+https://github.com/SS-Lab-at-NU/m4_simulation
+https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/installing_gazebo_arduplugin.md
+https://www.youtube.com/watch?v=m7hPyJJmWmU
 
 
 Final Changes:

@@ -4,6 +4,11 @@
     <param name="legged_robot_description" command="xacro $(find husky_description)/urdf/husky.xacro
        robot_type:=$(arg robot_type)
     "/>
+    
+    <param name="robot_description" command="xacro $(find husky_description)/urdf/husky.xacro
+       robot_type:=$(arg robot_type)
+    "/>
+    
     <node name="generate_urdf" pkg="husky_description" type="generate_urdf.sh" output="screen"
           args="$(find husky_description)/urdf/husky.xacro $(arg robot_type)"/>
 
@@ -15,11 +20,35 @@
     </include>
     
     <!-- push robot_description to factory and spawn robot in gazebo -->
-    <!--0.42 for standing with feet, 0.37 for standing no feet, .05 for crouching-->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
         args="-z 0.25 -param legged_robot_description -urdf -model $(arg robot_type)" output="screen"/>
         
+      <!--load controllers-->
+    <node name = "controller_spawner" pkg = "controller_manager" type="spawner" ns="/husky" args = "joint_state_controller fr_hip_frontal_position_controller fr_hip_sagittal_position_controller fr_knee_position_controller br_hip_frontal_position_controller br_hip_sagittal_position_controller br_knee_position_controller fl_hip_frontal_position_controller fl_hip_sagittal_position_controller fl_knee_position_controller bl_hip_frontal_position_controller bl_hip_sagittal_position_controller bl_knee_position_controller">
+    </node>
+        
     <!--keyboard control husky-->
     <node pkg="husky_description" name="keyboard" type="get_key.py" output="screen"/>
+
+    <!--rviz attempt 1 (creating a pre_joint_states topic that will be edited by a python code)
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <remap from="robot_description" to="legged_robot_description" />
+        <remap from="joint_states" to="pre_joint_states" />
+    </node>
+    -->
+
+    <!--rviz attempt 2 (creating a pre_joint_states topic that will be edited by a python code)
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <remap from="robot_description" to="legged_robot_description" />
+    </node>
+    
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_state_publisher" >
+        <remap from="robot_description" to="legged_robot_description" />
+    </node>
+
+    <node type="rviz" name="rviz" pkg="rviz" args="-d /home/franksl/qiayuanliao_ws7/src/mpc_legged_control/husky_description/config/config.rviz" />
+   
+    <node pkg="tf_broadcaster" name="tf_broadcaster" type="worldtobase" output="screen"/>
+    -->
             
 </launch>

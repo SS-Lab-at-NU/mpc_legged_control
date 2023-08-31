@@ -8,11 +8,67 @@ gazebo:
       angular_velocity_covariance: [ 0.0004, 0.0004, 0.0004 ]
       linear_acceleration_covariance: [ 0.01, 0.01, 0.01 ]
       
-gazebo_ros_control:
-  pid_gains:
+husky:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+
+  fr_hip_frontal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: RF_HAA
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
     
-    #for mimic joint (does not work due to hardware interface being used by WBC)
-    RF_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
-    LF_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
-    RH_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
-    LH_ankle: {p: 5, i: 0, d: 0.5, i_clamp: 50, antiwindup: false, publish_state: false}
+  fr_hip_sagittal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: RF_HFE
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  fr_knee_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: RF_KFE
+    pid: {p: 5, i: 0, d: 0, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+
+  br_hip_frontal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: RH_HAA
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  br_hip_sagittal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: RH_HFE
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  br_knee_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: RH_KFE
+    pid: {p: 5, i: 0, d: 0, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  fl_hip_frontal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: LF_HAA
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  fl_hip_sagittal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: LF_HFE
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  fl_knee_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: LF_KFE
+    pid: {p: 5, i: 0, d: 0, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+
+  bl_hip_frontal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: LH_HAA
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  bl_hip_sagittal_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: LH_HFE
+    pid: {p: 30, i: 0, d: 1.5, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
+    
+  bl_knee_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: LH_KFE
+    pid: {p: 5, i: 0, d: 0, antiwindup: true, i_clamp_max: 350.0, i_clamp_min: -350.0}
