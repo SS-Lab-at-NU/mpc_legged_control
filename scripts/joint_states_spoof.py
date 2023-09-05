@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+#ABANDONED CODE
+#this is my attempt to fix an rviz visualization problem
+#rviz does not properly show the foot and tibia joints, controlled by the mimic joints plugin
+#rviz reads the /joint_states topic, normally published by gazebo
+#i changed it so gazebo publishes /pre_joint_states, which is subscribed to by this code
+#this code then manually sets the mimic joints value, then republishes to /joint_states
+#on closer inspection every position in joint_states is 0, so idk how rviz even works at all
+
 import rospy
 from sensor_msgs.msg import JointState
 

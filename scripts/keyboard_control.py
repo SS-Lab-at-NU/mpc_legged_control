@@ -6,6 +6,8 @@ from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import PoseStamped
 
+import subprocess
+
 class keyboard_controller(object):
     def __init__(self):
         #Node
@@ -27,7 +29,13 @@ class keyboard_controller(object):
         self.goal = PoseStamped()
         self.goal.pose.position.z = 0.3
 
+        self.control_pos_start_path = "control_pos_start.py"
+        self.control_pos_stop_path = "control_pos_stop.py"
+        self.control_wbc_start_path = "control_wbc_start.py"
+        self.control_wbc_stop_path = "control_wbc_stop.py"
+
         self.gait = "stance"
+        self.active_controller = "pos"
 
     def update_key(self, data):
         self.keyboard_input = data
@@ -62,6 +70,19 @@ class keyboard_controller(object):
                 elif self.gait == "trot":
                     self.gait = "stance"
                 self.pub_gait.publish(self.gait)
+
+            if self.keyboard_input == String("1"):
+                if self.active_controller == "wbc":
+                    rospy.loginfo("WBC Deactivated")
+                    self.active_controller = "pos"
+                    subprocess.call(["python3",self.control_wbc_stop_path])
+                    subprocess.call(["python3",self.control_pos_start_path])
+            elif self.keyboard_input == String("2"):
+                if self.active_controller == "pos":
+                    rospy.loginfo("WBC Activated")
+                    self.active_controller = "wbc"
+                    subprocess.call(["python3",self.control_pos_stop_path])
+                    subprocess.call(["python3",self.control_wbc_start_path])
 
             rate.sleep()
     

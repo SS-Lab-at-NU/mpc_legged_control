@@ -30,24 +30,24 @@ set-title "arducopter"
 cd ~/ardupilot/ArduCopter/
 ../Tools/autotest/sim_vehicle.py -f gazebo-iris --console
 
-Terminal 3:
-set-title "stop pos"
+Terminal 4:
+set-title "position switcher"
 cd
 cd qiayuanliao_ws7/src/mpc_legged_control/scripts
-./control_pos_stop.py
-
-Terminal 4:
-set-title "start wbc"
-cd qiayuanliao_ws7/src/mpc_legged_control/scripts
-./control_wbc_start.py
+./position_control.py
 
 Terminal 5:
-set-title "rqt_gui"
-rosrun rqt_gui rqt_gui
+set-title "controller switcher"
+cd
+cd qiayuanliao_ws7/src/mpc_legged_control/scripts
+./keyboard_control.py
+
+Press 2 to turn off position controller, turn on wbc
+Press 1 to turn off wbc, turn on position controller
 
 Terminal 6:
-set-title "keyboard"
-/home/franksl/qiayuanliao_ws7/src/mpc_legged_control/scripts/keyboard_control.py
+set-title "rqt_gui"
+rosrun rqt_gui rqt_gui
 
 
 Arducopter Notes:
