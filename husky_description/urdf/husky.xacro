@@ -33,7 +33,7 @@
   
   <plugin filename="libgazebo_ros_p3d.so" name="p3d_base_controller">
     <alwaysOn>true</alwaysOn>
-    <updateRate>50.0</updateRate>    
+    <updateRate>250.0</updateRate>    
     <bodyName>base</bodyName>
     <topicName>ground_truth/state</topicName>
     <gaussianNoise>0</gaussianNoise>
@@ -106,13 +106,13 @@
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <update_rate>50</update_rate>
+      <update_rate>250</update_rate>
       <visualize>true</visualize>
       <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <topicName>imu_link</topicName>
         <bodyName>hussain_imu</bodyName>
-        <updateRateHZ>50.0</updateRateHZ>
+        <updateRateHZ>250.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
@@ -358,9 +358,9 @@
       </geometry>
     </collision>
     <visual name="base_visual">
-      <origin rpy="0.0 0.0 -1.571" xyz="0.0 0.0 0.0"/>
+      <origin rpy="-1.5708 0.0 1.5708" xyz=".212 -.258 0.128"/>
       <geometry>
-        <mesh filename="package://husky_description/meshes/body_link.STL" scale="1 1 1"/>
+        <mesh filename="package://husky_description/meshes/body_link_prop_part_bin.STL" scale="1 1 1"/>
       </geometry>
       <material name="">
         <color rgba="0.251 0.251 0.251 1.0"/>
@@ -1450,114 +1450,10 @@
 </gazebo>
 
 <!--ARDUCOPTER-->
-<xacro:property name="blade_x_disp" value="0.12" />
-<xacro:property name="blade_y_disp" value="0.162" />
-<!--real blades
- <link
-    name="front_right_blade">
-    <inertial>
-      <origin
-        xyz="0 0 0.004"
-        rpy="0 0 0" />
-      <mass
-        value="0.0061" />
-      <inertia ixx="9.75e-06" ixy="0" ixz="0" iyy="0.000166704" iyz="0" izz="0.000167604"/>
-    </inertial>
-  </link>
-  <link
-    name="rear_left_blade">
-    <inertial>
-      <origin
-        xyz="0 0 0.004"
-        rpy="0 0 0" />
-      <mass
-        value="0.0061" />
-      <inertia ixx="9.75e-06" ixy="0" ixz="0" iyy="0.000166704" iyz="0" izz="0.000167604"/>
-    </inertial>
-  </link>
-  <link
-    name="front_left_blade">
-    <inertial>
-      <origin
-        xyz="0 0 0.004"
-        rpy="0 0 0" />
-      <mass
-        value="0.0061" />
-      <inertia ixx="9.75e-06" ixy="0" ixz="0" iyy="0.000166704" iyz="0" izz="0.000167604"/>
-    </inertial>
-  </link>
-  <link
-    name="rear_right_blade">
-    <inertial>
-      <origin
-        xyz="0 0 0.004"
-        rpy="0 0 0" />
-      <mass
-        value="0.0061" />
-      <inertia ixx="9.75e-06" ixy="0" ixz="0" iyy="0.000166704" iyz="0" izz="0.000167604"/>
-    </inertial>
-  </link>
-
-  <joint
-    name="front_right_blade_joint"
-    type="revolute">
-    <origin
-      xyz="${blade_x_disp} ${-blade_y_disp} 0.062"
-      rpy="3.1416 0 0" />
-    <parent
-      link="base" />
-    <child
-      link="front_right_blade" />
-    <axis
-      xyz="0 0 1" />
-    <limit lower="-1e+16" upper="1e+16" effort="10000" velocity="10000"/>
-  </joint>
-
-  <joint
-    name="rear_left_blade_joint"
-    type="revolute">
-    <origin
-      xyz="${-blade_x_disp} ${blade_y_disp} 0.062"
-      rpy="0 0 0" />
-    <parent
-      link="base" />
-    <child
-      link="rear_left_blade" />
-    <axis
-      xyz="0 0 1" />
-    <limit lower="-1e+16" upper="1e+16" effort="10000" velocity="10000"/>
-  </joint>
-
-  <joint
-    name="front_left_blade_joint"
-    type="revolute">
-    <origin
-      xyz="${blade_x_disp} ${blade_y_disp} 0.062"
-      rpy="0 0 0" />
-    <parent
-      link="base" />
-    <child
-      link="front_left_blade" />
-    <axis
-      xyz="0 0 1" />
-    <limit lower="-1e+16" upper="1e+16" effort="10000" velocity="10000"/>
-  </joint>
-
-  <joint
-    name="rear_right_blade_joint"
-    type="revolute">
-    <origin
-      xyz="${-blade_x_disp} ${-blade_y_disp} 0.062"
-      rpy="3.1416 0 0" />
-    <parent
-      link="base" />
-    <child
-      link="rear_right_blade" />
-    <axis
-      xyz="0 0 1" />
-    <limit lower="-1e+16" upper="1e+16" effort="10000" velocity="10000"/>  
-  </joint>
-  -->
+<xacro:property name="blade_x_disp_front" value="0.141" />
+<xacro:property name="blade_x_disp_back" value="0.125" />
+<xacro:property name="blade_y_disp" value="0.189" />
+<xacro:property name="blade_z_disp" value="0.1" />
 
 <!--fake blades-->
   <link
@@ -1609,7 +1505,7 @@
     name="fake_front_right_blade_joint"
     type="revolute">
     <origin
-      xyz="${blade_x_disp} ${-blade_y_disp} 0.062"
+      xyz="${blade_x_disp_front} ${-blade_y_disp} ${blade_z_disp}"
       rpy="0 0 0" />
     <parent
       link="base" />
@@ -1624,7 +1520,7 @@
     name="fake_front_left_blade_joint"
     type="revolute">
     <origin
-      xyz="${blade_x_disp} ${blade_y_disp} 0.062"
+      xyz="${blade_x_disp_front} ${blade_y_disp} ${blade_z_disp}"
       rpy="0 0 0" />
     <parent
       link="base" />
@@ -1639,7 +1535,7 @@
     name="fake_rear_left_blade_joint"
     type="revolute">
     <origin
-      xyz="${-blade_x_disp} ${blade_y_disp} 0.062"
+      xyz="${-blade_x_disp_back} ${blade_y_disp} ${blade_z_disp}"
       rpy="0 0 0" />
     <parent
       link="base" />
@@ -1654,7 +1550,7 @@
     name="fake_rear_right_blade_joint"
     type="revolute">
     <origin
-      xyz="${-blade_x_disp} ${-blade_y_disp} 0.062"
+      xyz="${-blade_x_disp_back} ${-blade_y_disp} ${blade_z_disp}"
       rpy="0 0 0" />
     <parent
       link="base" />
@@ -1799,6 +1695,12 @@
     <link_name>fake_rear_right_blade</link_name>
   </plugin>
 
+   <!--multiplier 1898, pid 0.2 0 0 -->
+  <xacro:property name="arducop_multiplier" value="1898" />
+  <xacro:property name="arducop_p" value="0.2" />
+  <xacro:property name="arducop_i" value="0" />
+  <xacro:property name="arducop_d" value="0" />
+
   <plugin name="arducopter_plugin" filename="libArduPilotPlugin.so">
       <fdm_addr>127.0.0.1</fdm_addr>
       <fdm_port_in>9002</fdm_port_in>
@@ -1821,57 +1723,57 @@
         -->
         <type>VELOCITY</type>
         <offset>0</offset>
-        <p_gain>0.2</p_gain>
-        <i_gain>0</i_gain>
-        <d_gain>0</d_gain>
+        <p_gain>${arducop_p}</p_gain>
+        <i_gain>${arducop_i}</i_gain>
+        <d_gain>${arducop_d}</d_gain>
         <i_max>0</i_max>
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
         <jointName>fake_front_right_blade_joint</jointName>
-        <multiplier>1898</multiplier>
+        <multiplier>${arducop_multiplier}</multiplier>
         <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
       </control>
       <control channel="1">
         <type>VELOCITY</type>
         <offset>0</offset>
-        <p_gain>0.2</p_gain>
-        <i_gain>0</i_gain>
-        <d_gain>0</d_gain>
+        <p_gain>${arducop_p}</p_gain>
+        <i_gain>${arducop_i}</i_gain>
+        <d_gain>${arducop_d}</d_gain>
         <i_max>0</i_max>
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
         <jointName>fake_rear_left_blade_joint</jointName>
-        <multiplier>1898</multiplier>
+        <multiplier>${arducop_multiplier}</multiplier>
         <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
       </control>
       <control channel="2">
         <type>VELOCITY</type>
         <offset>0</offset>
-        <p_gain>0.2</p_gain>
-        <i_gain>0</i_gain>
-        <d_gain>0</d_gain>
+        <p_gain>${arducop_p}</p_gain>
+        <i_gain>${arducop_i}</i_gain>
+        <d_gain>${arducop_d}</d_gain>
         <i_max>0</i_max>
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
         <jointName>fake_front_left_blade_joint</jointName>
-        <multiplier>-1898</multiplier>
+        <multiplier>-${arducop_multiplier}</multiplier>
         <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
       </control>
       <control channel="3">
         <type>VELOCITY</type>
         <offset>0</offset>
-        <p_gain>0.2</p_gain>
-        <i_gain>0</i_gain>
-        <d_gain>0</d_gain>
+        <p_gain>${arducop_p}</p_gain>
+        <i_gain>${arducop_i}</i_gain>
+        <d_gain>${arducop_d}</d_gain>
         <i_max>0</i_max>
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
         <jointName>fake_rear_right_blade_joint</jointName>
-        <multiplier>-1898</multiplier>
+        <multiplier>-${arducop_multiplier}</multiplier>
         <controlVelocitySlowdownSim>1</controlVelocitySlowdownSim>
       </control>
     </plugin>

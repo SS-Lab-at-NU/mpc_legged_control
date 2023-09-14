@@ -1,0 +1,50 @@
+To build your ws, follow these instructions:
+https://github.com/SS-Lab-at-NU/mpc_legged_control
+
+create ws/src, place the following inside:
+	hpp-fcl
+	mpc_legged_control
+	ocs2
+	ocs2_robotic_assets
+	pinocchio
+	
+cd to ws, then build:
+
+catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo
+catkin build ocs2_legged_robot_ros ocs2_self_collision_visualization
+
+catkin build legged_controllers legged_gazebo husky_description
+
+
+download this package and place in ws/src:
+https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins
+
+then cd ws and build:
+catkin build roboticsgroup_gazebo_plugins
+
+
+to install ardupilot follow these instructions from this source:
+https://github.com/SS-Lab-at-NU/m4_simulation
+
+cd ~
+sudo apt install git
+git clone https://github.com/ArduPilot/ardupilot.git
+cd ardupilot
+
+cd ardupilot
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+. ~/.profile
+
+cd ~
+git clone --recurse https://github.com/khancyr/ardupilot_gazebo.git
+cd ardupilot_gazebo
+
+mkdir build
+cd build
+cmake ..
+make -j4
+sudo make install
+
+echo 'source /usr/share/gazebo/setup.sh' >> ~/.bashrc
+echo 'export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models' >> ~/.bashrc
+. ~/.bashrc
