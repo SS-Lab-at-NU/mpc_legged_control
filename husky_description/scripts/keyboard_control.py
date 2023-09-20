@@ -38,7 +38,7 @@ class keyboard_controller(object):
         self.active_controller = "pos"
 
         self.null_speed = 0.3
-        self.forward_speed = 0.35
+        self.forward_speed = 0.38
         self.back_speed = -0.01
         self.turn_speed = 0.5
 
@@ -63,11 +63,11 @@ class keyboard_controller(object):
             if key == String("w"):
                 self.set_velocity(self.forward_speed, 0.0)
             elif key == String("a"):
-                self.set_velocity(self.null_speed,-1*self.turn_speed)
-            elif key == String("d"):
                 self.set_velocity(self.null_speed,self.turn_speed)
             elif key == String("s"):
                 self.set_velocity(self.back_speed, 0.0)
+            elif key == String("d"):
+                self.set_velocity(self.null_speed,-1*self.turn_speed)
             elif key == String("w+a"):
                 self.set_velocity(self.forward_speed, self.turn_speed)
             elif key == String("w+d"):
@@ -87,16 +87,27 @@ class keyboard_controller(object):
                 self.forward_speed += 0.01
                 print("Forward_speed: "+str(round(self.forward_speed,2)))
             elif key == String("q+w") and prev_key != String("q+w"):
-                self.forward_speed += 0.01
+                self.forward_speed -= 0.01
                 print("Forward_speed: "+str(round(self.forward_speed,2)))
+            elif key == String("e+s") and prev_key != String("e+s"):
+                self.back_speed += 0.01
+                print("Back_speed: "+str(round(self.back_speed,2)))
+            elif key == String("q+s") and prev_key != String("q+s"):
+                self.back_speed -= 0.01
+                print("Back_speed: "+str(round(self.back_speed,2)))
+            elif key == String("e+d") and prev_key != String("e+d"):
+                self.turn_speed += 0.01
+                print("Turn_speed: "+str(round(self.turn_speed,2)))
+            elif key == String("q+d") and prev_key != String("q+d"):
+                self.turn_speed -= 0.01
+                print("Turn_speed: "+str(round(self.turn_speed,2)))
+            elif key == String("e+a") and prev_key != String("e+a"):
+                self.turn_speed += 0.01
+                print("Turn_speed: "+str(round(self.turn_speed,2)))
+            elif key == String("q+a") and prev_key != String("q+a"):
+                self.turn_speed -= 0.01
+                print("Turn_speed: "+str(round(self.turn_speed,2)))
 
-            elif key == String("shift") and prev_key != String("shift"):
-                self.set_velocity(self.null_speed, 0.0)
-                if self.gait == String("stance"):
-                    self.gait = "trot"
-                elif self.gait == String("trot"):
-                    self.gait = "stance"
-                self.pub_gait.publish(self.gait)
             elif self.keyboard_input == String("Z"):
                 if self.active_controller == "wbc":
                     rospy.loginfo("WBC Deactivated")
@@ -109,6 +120,15 @@ class keyboard_controller(object):
                     self.active_controller = "wbc"
                     subprocess.Popen(self.control_pos_stop_cmd, shell=True)
                     subprocess.Popen(self.control_wbc_start_cmd, shell=True)
+            
+            elif key == String("shift") and prev_key != String("shift"):
+                self.set_velocity(self.null_speed, 0.0)
+                if self.gait == String("stance"):
+                    self.gait = "trot"
+                elif self.gait == String("trot"):
+                    self.gait = "stance"
+                self.pub_gait.publish(self.gait)
+
             else:
                 self.set_velocity(self.null_speed, 0.0)
 

@@ -160,6 +160,7 @@
     <limit effort="${efflim}" lower="${r_hip_frontal_lowlim}" upper="${r_hip_frontal_uplim}" velocity="8.7267"/>
   </joint>
 
+  <!--hip sag ipos -121.61 r -58.39 l-->
   <xacro:property name="fr_hip_sagittal_ipos" value="${-121.61*pi/180}" />
   <xacro:property name="fr_hip_sagittal_lowlim" value="${-12*pi/180}" />
   <xacro:property name="fr_hip_sagittal_uplim" value="0" />
@@ -167,6 +168,7 @@
   <xacro:property name="fl_hip_sagittal_lowlim" value="0" />
   <xacro:property name="fl_hip_sagittal_uplim" value="${12*pi/180}" />
 
+  <!--hip sag ipos -131.32 r -48.68 l-->
   <xacro:property name="br_hip_sagittal_ipos" value="${-131.32*pi/180}" />
   <xacro:property name="br_hip_sagittal_lowlim" value="${-12*pi/180}" />
   <xacro:property name="br_hip_sagittal_uplim" value="0" />
@@ -1561,6 +1563,9 @@
     <limit lower="-1e+16" upper="1e+16" effort="10000" velocity="10000"/>  
   </joint>
 
+<!--center of pressure, 0.084-->
+<xacro:property name="c_o_p" value="0.084" />
+
 <!--plugins-->
 <gazebo>
   <plugin name="rotor_0_blade_1" filename="libLiftDragPlugin.so">
@@ -1574,7 +1579,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>0.084 0 0</cp>
+    <cp>${c_o_p} 0 0</cp>
     <forward>0 1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_front_right_blade</link_name>
@@ -1590,7 +1595,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>-0.084 0 0</cp>
+    <cp>-${c_o_p} 0 0</cp>
     <forward>0 -1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_front_right_blade</link_name>
@@ -1607,7 +1612,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>0.084 0 0</cp>
+    <cp>${c_o_p} 0 0</cp>
     <forward>0 1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_rear_left_blade</link_name>
@@ -1623,7 +1628,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>-0.084 0 0</cp>
+    <cp>-${c_o_p} 0 0</cp>
     <forward>0 -1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_rear_left_blade</link_name>
@@ -1640,7 +1645,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>0.084 0 0</cp>
+    <cp>${c_o_p} 0 0</cp>
     <forward>0 -1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_front_left_blade</link_name>
@@ -1656,7 +1661,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>-0.084 0 0</cp>
+    <cp>-${c_o_p} 0 0</cp>
     <forward>0 1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_front_left_blade</link_name>
@@ -1673,7 +1678,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>0.084 0 0</cp>
+    <cp>${c_o_p} 0 0</cp>
     <forward>0 -1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_rear_right_blade</link_name>
@@ -1689,7 +1694,7 @@
     <cma_stall>0.0</cma_stall>
     <area>0.002</area>
     <air_density>1.2041</air_density>
-    <cp>-0.084 0 0</cp>
+    <cp>-${c_o_p} 0 0</cp>
     <forward>0 1 0</forward>
     <upward>0 0 1</upward>
     <link_name>fake_rear_right_blade</link_name>

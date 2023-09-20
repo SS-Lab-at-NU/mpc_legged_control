@@ -58,6 +58,27 @@ class KeyListener(object):
                 if(self.verbose): print("Q + W pressed")
                 self.__keyboard_input = "q+w"
 
+            elif keyboard.is_pressed("e+s"):
+                if(self.verbose): print("E + S pressed")
+                self.__keyboard_input = "e+s"
+            elif keyboard.is_pressed("q+s"):
+                if(self.verbose): print("Q + S pressed")
+                self.__keyboard_input = "q+s"
+
+            elif keyboard.is_pressed("e+d"):
+                if(self.verbose): print("E + D pressed")
+                self.__keyboard_input = "e+d"
+            elif keyboard.is_pressed("q+d"):
+                if(self.verbose): print("Q + D pressed")
+                self.__keyboard_input = "q+d"
+
+            elif keyboard.is_pressed("e+a"):
+                if(self.verbose): print("E + A pressed")
+                self.__keyboard_input = "e+a"
+            elif keyboard.is_pressed("q+a"):
+                if(self.verbose): print("Q + A pressed")
+                self.__keyboard_input = "q+a"
+
             elif keyboard.is_pressed("e"):
                 if(self.verbose): print("E pressed")
                 self.__keyboard_input = "e"
@@ -90,12 +111,14 @@ class KeyListener(object):
             elif keyboard.is_pressed("d"):
                 if(self.verbose): print("D pressed")
                 self.__keyboard_input = "d"
+
             elif keyboard.is_pressed("z"):
                 if(self.verbose): print("z pressed")
                 self.__keyboard_input = "Z"
             elif keyboard.is_pressed("x"):
                 if(self.verbose): print("x pressed")
                 self.__keyboard_input = "X"
+
             else:
                 if(self.verbose): print("NONE")
                 self.__keyboard_input = "NONE"

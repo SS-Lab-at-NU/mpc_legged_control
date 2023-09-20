@@ -39,7 +39,7 @@ unpause gazebo
 Terminal 4:
 set-title "arducopter"
 cd ~/ardupilot/ArduCopter/
-../Tools/autotest/sim_vehicle.py -f gazebo-iris-husky --console
+../Tools/autotest/sim_vehicle.py -f gazebo-iris --console
 
 Terminal 5:
 set-title "rqt_gui"
@@ -58,7 +58,7 @@ mode GUIDED
 arm throttle
 takeoff 2
 position x y z
-attitude q0 q1 q2 q3 thrust
+attitude q0 q1 q2 q3 thrust 
 mode Land / RTL
 
 
