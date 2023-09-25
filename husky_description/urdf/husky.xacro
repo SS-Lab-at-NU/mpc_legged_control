@@ -1362,7 +1362,7 @@
 
   
   <gazebo>
-  <plugin name="RF_foot_fixed_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+  <plugin name="RF_ankle_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>RF_KFE</joint>
     <mimicJoint>RF_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
@@ -1373,7 +1373,7 @@
     <robotNamespace>/</robotNamespace>
   </plugin>
   
-  <plugin name="LF_foot_fixed_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+  <plugin name="LF_ankle_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>LF_KFE</joint>
     <mimicJoint>LF_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
@@ -1384,7 +1384,7 @@
     <robotNamespace>/</robotNamespace>
   </plugin>
   
-  <plugin name="RH_foot_fixed_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+  <plugin name="RH_ankle_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>RH_KFE</joint>
     <mimicJoint>RH_ankle</mimicJoint>
     <has_pid>"false"</has_pid>
@@ -1395,7 +1395,7 @@
     <robotNamespace>/</robotNamespace>
   </plugin>
   
-  <plugin name="LH_foot_fixed_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+  <plugin name="LH_ankle_mimic" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>LH_KFE</joint>
     <mimicJoint>LH_ankle</mimicJoint>
     <has_pid>"false"</has_pid>

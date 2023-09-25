@@ -29,6 +29,9 @@
         
     <!--keyboard reader, position locker, keyboard navigation and controller switcher-->
     <node pkg="husky_description" name="lock_legs" type="position_control.py" output="screen"/>
+    
+   <!--
     <node pkg="husky_description" name="keyboard_control" type="keyboard_control.py" output="screen"/>
+    -->
             
 </launch>

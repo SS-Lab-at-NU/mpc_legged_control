@@ -19,7 +19,7 @@ swing_trajectory_config
 {
   liftOffVelocity               0.07
   touchDownVelocity            -0.1
-  swingHeight                   0.05
+  swingHeight                   0.1
   swingTimeScale                0.5
 }
 

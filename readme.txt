@@ -1,7 +1,8 @@
 -husky8, husky7 with better control
 	keyboard
-		position_control.py and keyboard_control.py are now nodes in husky_description
+		position_control.py is now a node in husky_description launch
 		keyboard_control.py has been updated with aidan's code
+		keyboard_control.py can be switched with pose_reader.py
 	ardupilot file change test (NOT EFFECTIVE)
 		ardupilot/tools/autotest
 			pysim/vehicleinfo.py
@@ -14,16 +15,19 @@
 
 To launch husky_description:
 	
+	
 Terminal 1:
 source ~/qiayuanliao_ws8/devel/setup.bash
 set-title "gazebo"
 roslaunch husky_description husky_world.launch
+
 
 Terminal 2:
 source ~/qiayuanliao_ws8/devel/setup.bash
 set-title "load ctrl"
 export ROBOT_TYPE=husky
 roslaunch legged_controllers load_controller.launch cheater:=false
+
 
 Terminal 3:
 set-title "get key"
@@ -34,16 +38,40 @@ source /home/franksl/qiayuanliao_ws8/devel/setup.bash
 cd /home/franksl/qiayuanliao_ws8/src/mpc_legged_control/scripts/
 ./aidan_get_key.py
 
+
+Prepare:
 unpause gazebo
 
+(if not running keyboard control do below)
+source ~/qiayuanliao_ws8/devel/setup.bash
+rosrun husky_description control_pos_stop.py
+rosrun husky_description control_wbc_start.py
+
+
 Terminal 4:
+source ~/qiayuanliao_ws8/devel/setup.bash
+set-title "keyboard control"
+cd
+cd qiayuanliao_ws8/src/mpc_legged_control/husky_description/scripts
+./keyboard_control.py
+
+OR
+
+set-title "automatic control"
+
+cd qiayuanliao_ws8/src/mpc_legged_control/husky_description/scripts/test
+./pose_reader.py
+
+OR
+
+set-title "rqt_gui"
+rosrun rqt_gui rqt_gui
+
+
+Terminal 5:
 set-title "arducopter"
 cd ~/ardupilot/ArduCopter/
 ../Tools/autotest/sim_vehicle.py -f gazebo-iris --console
-
-Terminal 5:
-set-title "rqt_gui"
-rosrun rqt_gui rqt_gui
 
 
 Arducopter Notes:
