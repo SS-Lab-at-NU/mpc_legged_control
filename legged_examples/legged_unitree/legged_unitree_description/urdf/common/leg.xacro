@@ -1,0 +1,380 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find legged_unitree_description)/urdf/common/transmission.xacro"/>
+
+    <xacro:macro name="mimic_joint_plugin_gazebo" params="name_prefix parent_joint mimic_joint has_pid:=false multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1.0 robot_namespace:=''">
+        <gazebo>
+            <plugin name="${name_prefix}mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+                <joint>${parent_joint}</joint>
+                <mimicJoint>${mimic_joint}</mimicJoint>
+                <xacro:if value="${has_pid}">                     <!-- if set to true, PID parameters from "/gazebo_ros_control/pid_gains/${mimic_joint}" are loaded -->
+                <hasPID />
+                </xacro:if>
+                <multiplier>${multiplier}</multiplier>
+                <offset>${offset}</offset>
+                <sensitiveness>${sensitiveness}</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
+                <maxEffort>${max_effort}</maxEffort>              <!-- only taken into account if has_pid:=true [Nm] -->
+                <xacro:unless value="${robot_namespace == ''}">
+                <robotNamespace>${robot_namespace}</robotNamespace>
+                </xacro:unless>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="controller_plugin_gazebo" params="robot_namespace:=''">
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <xacro:unless value="${robot_namespace == ''}">
+                <robotNamespace>${robot_namespace}</robotNamespace>
+                </xacro:unless>
+                <controlPeriod>0.001</controlPeriod>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+    
+
+    <xacro:macro name="leg" params="prefix mirror mirror_dae front_hind front_hind_dae *origin">
+
+
+        <joint name="${prefix}_HAA" type="revolute">
+            <xacro:insert_block name="origin"/>
+            <parent link="base"/>
+            <child link="${prefix}_hip"/>
+            <axis xyz="1 0 0"/>
+            <dynamics damping="${damping}" friction="${friction}"/>
+
+
+            <xacro:if value="${(mirror_dae == True)}"> 
+            <limit effort="${hip_torque_max}" velocity="${hip_velocity_max}" lower="${hip_min}"
+                    upper="${hip_max}"/>
+            </xacro:if>
+            <xacro:if value="${(mirror_dae == False)}">
+                <limit effort="${hip_torque_max}" velocity="${hip_velocity_max}" lower="${-hip_max}"
+                       upper="${-hip_min}"/>
+            </xacro:if> 
+            <!-- <xacro:if value="${(mirror_dae == True) and (front_hind_dae == False)}">
+                <limit effort="${hip_torque_max}" velocity="${hip_velocity_max}" lower="${hip_min}"
+                       upper="${hip_max}"/>
+            </xacro:if>
+            <xacro:if value="${(mirror_dae == False) and (front_hind_dae == False)}">
+                <limit effort="${hip_torque_max}" velocity="${hip_velocity_max}" lower="${-hip_max}"
+                       upper="${-hip_min}"/>
+            </xacro:if>  -->
+        </joint>
+
+        <link name="${prefix}_hip">
+            <visual>
+                <!-- <xacro:if value="${(mirror_dae == True) and (front_hind_dae == True)}">
+                    <origin rpy="0 0 0" xyz="0 0 0"/>
+                </xacro:if>
+                <xacro:if value="${(mirror_dae == False) and (front_hind_dae == True)}">
+                    <origin rpy="${pi} 0 0" xyz="0 0 0"/>
+                </xacro:if>
+                <xacro:if value="${(mirror_dae == True) and (front_hind_dae == False)}">
+                    <origin rpy="0 0 0" xyz="0 0 0"/>
+                </xacro:if>
+                <xacro:if value="${(mirror_dae == False) and (front_hind_dae == False)}">
+                    <origin rpy="${pi} 0 0" xyz="0 0 0"/>
+                </xacro:if> -->
+                <xacro:if value="${(mirror_dae == True) and (front_hind_dae == True)}">
+                    <origin rpy="0 0 0" xyz="0 0 0"/>
+                </xacro:if>
+                <xacro:if value="${(mirror_dae == False) and (front_hind_dae == True)}">
+                    <origin rpy="${pi} 0 0" xyz="0 0 0"/>
+                </xacro:if>
+                <xacro:if value="${(mirror_dae == True) and (front_hind_dae == False)}">
+                    <origin rpy="0 ${pi} 0" xyz="0 0 0"/>
+                </xacro:if>
+                <xacro:if value="${(mirror_dae == False) and (front_hind_dae == False)}">
+                    <origin rpy="${pi} ${pi} 0" xyz="0 0 0"/>
+                </xacro:if>
+                <geometry>
+                    <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/hip.dae"
+                          scale="1 1 1"/>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin rpy="${pi/2.0} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="${hip_length}" radius="${hip_radius}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin rpy="0 0 0" xyz="${hip_com_x*front_hind} ${hip_com_y*mirror} ${hip_com_z}"/>
+                <mass value="${hip_mass}"/>
+                <inertia
+                        ixx="${hip_ixx}" ixy="${hip_ixy*mirror*front_hind}" ixz="${hip_ixz*front_hind}"
+                        iyy="${hip_iyy}" iyz="${hip_iyz*mirror}"
+                        izz="${hip_izz}"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}_HFE" type="revolute">
+            <origin rpy="0 0 0" xyz="0 ${thigh_offset*mirror} 0"/>
+            <parent link="${prefix}_hip"/>
+            <child link="${prefix}_thigh"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="${damping}" friction="${friction}"/>
+            <limit effort="${thigh_torque_max}" velocity="${thigh_velocity_max}" lower="${thigh_min}"
+                   upper="${thigh_max}"/>
+        </joint>
+
+        <link name="${prefix}_thigh">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <xacro:if value="${mirror_dae == True}">
+                        <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/thigh.dae"
+                              scale="1 1 1"/>
+                    </xacro:if>
+                    <xacro:if value="${mirror_dae == False}">
+                        <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/thigh_mirror.dae"
+                              scale="1 1 1"/>
+                    </xacro:if>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin rpy="0 ${pi/2.0+0.1} 0" xyz="${thigh_x_offset} 0 ${-thigh_length/2.0}"/>
+                <geometry>
+                    <box size="${thigh_length} ${thigh_width} ${thigh_height}"/>
+                </geometry>
+            </collision>
+            <collision>
+                <origin rpy="${pi/2.0} 0 0" xyz="0 ${mirror*thigh_shoulder_y_offset} 0"/>
+                <geometry>
+                    <cylinder length="${thigh_shoulder_length}" radius="${thigh_shoulder_radius}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin rpy="0 0 0" xyz="${thigh_com_x} ${thigh_com_y*mirror} ${thigh_com_z}"/>
+                <mass value="${thigh_mass}"/>
+                <inertia
+                        ixx="${thigh_ixx}" ixy="${thigh_ixy*mirror}" ixz="${thigh_ixz}"
+                        iyy="${thigh_iyy}" iyz="${thigh_iyz*mirror}"
+                        izz="${thigh_izz}"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}_KFE" type="revolute">
+            <xacro:if value="${mirror_dae == True}">
+                <origin rpy="0 0 0" xyz="0 ${-thigh_link_offset_y} ${-thigh_length}"/>
+            </xacro:if>
+            <xacro:if value="${mirror_dae == False}">
+                <origin rpy="0 0 0" xyz="0 ${thigh_link_offset_y} ${-thigh_length}"/>
+            </xacro:if>
+            <parent link="${prefix}_thigh"/>
+            <child link="${prefix}_link_1"/>
+            <axis xyz="0 1 0"/>
+            <dynamics damping="${damping}" friction="${friction}"/>
+
+            <limit effort="${calf_torque_max}" velocity="${calf_velocity_max}" lower="${calf_min}" upper="${calf_max}"/>
+
+        </joint>
+
+        <link name="${prefix}_link_1">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <xacro:if value="${mirror_dae == True}">
+                        <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/tibia.dae"
+                              scale="1 1 1"/>
+                    </xacro:if>
+                    <xacro:if value="${mirror_dae == False}">
+                        <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/tibia_mirror.dae"
+                              scale="1 1 1"/>
+                    </xacro:if>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="${-thigh_length} 0 0"/>
+                <geometry>
+                    <box size="${calf_length} ${calf_width} ${calf_height}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin rpy="0 ${pi/2.0} 0" xyz="${-thigh_length} 0 0"/>
+                <mass value="${calf_mass}"/>
+                <inertia
+                        ixx="${calf_ixx}" ixy="${calf_ixy}" ixz="${calf_ixz}"
+                        iyy="${calf_iyy}" iyz="${calf_iyz}"
+                        izz="${calf_izz}"/>
+            </inertial>
+        </link>
+        
+
+        <!-- <joint name="${prefix}_KFE_2" type="revolute">
+            <xacro:if value="${mirror_dae == True}">
+                <origin rpy="0 0 0" xyz="0 ${-thigh_link_offset_y} ${-thigh_link2_length}"/>
+            </xacro:if>
+            <xacro:if value="${mirror_dae == False}">
+                <origin rpy="0 0 0" xyz="0 ${thigh_link_offset_y} ${-thigh_link2_length}"/>
+            </xacro:if>
+            <parent link="${prefix}_thigh"/>
+            <child link="${prefix}_link_2"/>
+            <axis xyz="0 1 0"/>
+            <mimic joint="${prefix}_KFE" multiplier="1" offset="0"/> 
+            <dynamics damping="${damping}" friction="${friction}"/>
+            <limit effort="${link2_torque_max}" velocity="${link2_velocity_max}" lower="${link2_min}" upper="${link2_max}"/>
+        </joint>
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${prefix}_KFE_2"
+            parent_joint="${prefix}_KFE" mimic_joint="${prefix}_KFE_2"
+            has_pid="true" multiplier="1" max_effort="10.0" />
+
+        <link name="${prefix}_link_2">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <xacro:if value="${mirror_dae == True}">
+                        <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/tibia.dae"
+                              scale="1 1 1"/>
+                    </xacro:if>
+                    <xacro:if value="${mirror_dae == False}">
+                        <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/tibia_mirror.dae"
+                              scale="1 1 1"/>
+                    </xacro:if>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin rpy="0 ${pi/2.0} 0" xyz="${calf_x_offset} 0 ${-calf_length/2.0}"/>
+                <geometry>
+                    <box size="${calf_length} ${calf_width} ${calf_height}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin rpy="0 0 0" xyz="${calf_com_x} ${calf_com_y} ${calf_com_z}"/>
+                <mass value="${calf_mass}"/>
+                <inertia
+                        ixx="${calf_ixx}" ixy="${calf_ixy}" ixz="${calf_ixz}"
+                        iyy="${calf_iyy}" iyz="${calf_iyz}"
+                        izz="${calf_izz}"/>
+            </inertial>
+        </link> -->
+
+        <joint name="${prefix}_ankel_1" type="revolute">
+            <origin rpy="0 0 0" xyz="${-tibia_length} 0 0"/>
+            <parent link="${prefix}_link_1"/>
+            <child link="${prefix}_tarsus"/>
+            <axis xyz="0 1 0"/>
+            <mimic joint="${prefix}_KFE" multiplier="-1" offset="${90*pi/180}"/> 
+            <dynamics damping="${damping}" friction="${friction}"/>
+            <limit effort="${tarsus_torque_max}" velocity="${tarsus_velocity_max}" lower="0" upper="${pi}"/>
+        </joint> 
+
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${prefix}_ankel_1"
+            parent_joint="${prefix}_KFE" mimic_joint="${prefix}_ankel_1"
+            has_pid="true" multiplier="-1" max_effort="15.0" offset="${90*pi/180}" />
+
+        <!-- <joint name="${prefix}_ankel_2" type="revolute">
+            <origin rpy="0 0 0" xyz="${-tibia_length} 0 0"/>
+            <child link="${prefix}_tarsus"/>
+            <parent link="${prefix}_link_2"/>
+            <axis xyz="0 1 0"/>
+            <mimic joint= "${prefix}_KFE_2" multiplier="0.5" offset="${pi/2.0}"/> 
+            <dynamics damping="${damping}" friction="${friction}"/>
+            <limit effort="${tarsus_torque_max}" velocity="${tarsus_velocity_max}" lower="${tarsus_min}" upper="${tarsus_max}"/>
+        </joint>   -->
+
+        <link name="${prefix}_tarsus">
+            <visual>
+                <!-- <origin rpy="${pi/2.0} 0 0" xyz="0.06 0 0"/> -->
+                <origin rpy="${pi/2.0} 0 0" xyz="0 0 0"/> 
+                <geometry>
+                    <mesh filename="package://legged_unitree_description/meshes/$(arg robot_type)/tarsus.dae"
+                        scale="1 1 1"/>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="${calf_length} ${calf_width} ${calf_height}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin rpy="0 ${pi/2.0} 0" xyz="0 0 0"/>
+                <mass value="${calf_mass}"/>
+                <inertia
+                        ixx="${tarsus_ixx}" ixy="${tarsus_ixy}" ixz="${tarsus_ixz}"
+                        iyy="${tarsus_iyy}" iyz="${tarsus_iyz}"
+                        izz="${tarsus_izz}"/>
+            </inertial>
+        </link>     
+
+
+        <joint name="${prefix}_foot_fixed" type="fixed">
+            <origin rpy="0 0 0" xyz="${(calf_length-0.08)} 0 0"/>
+            <parent link="${prefix}_tarsus"/>
+            <child link="${prefix}_FOOT"/>
+        </joint>
+
+        <link name="${prefix}_FOOT">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="${foot_radius-0.01}"/>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="${foot_radius}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="${foot_mass}"/>
+                <inertia
+                        ixx="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}" ixy="0.0" ixz="0.0"
+                        iyy="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}" iyz="0.0"
+                        izz="${(2*foot_mass)/5.0*(foot_radius*foot_radius)}"/>
+            </inertial>
+        </link>
+
+        <gazebo reference="${prefix}_foot_fixed">
+            <disableFixedJointLumping>true</disableFixedJointLumping>
+        </gazebo>
+
+        <gazebo reference="${prefix}_hip">
+            <mu1>0.2</mu1>
+            <mu2>0.2</mu2>
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+        <gazebo reference="${prefix}_thigh">
+            <mu1>0.2</mu1>
+            <mu2>0.2</mu2>
+            <self_collide>0</self_collide>
+            <material>Gazebo/DarkGrey</material>
+            <kp value="1000000.0"/>
+            <kd value="100.0"/>
+        </gazebo>
+        <gazebo reference="${prefix}_calf">
+            <mu1>0.6</mu1>
+            <mu2>0.6</mu2>
+            <self_collide>1</self_collide>
+        </gazebo>
+        <gazebo reference="${prefix}_FOOT">
+            <mu1>0.6</mu1>
+            <mu2>0.6</mu2>
+            <self_collide>1</self_collide>
+            <material>Gazebo/DarkGrey</material>
+            <kp value="1000000.0"/>
+            <kd value="100.0"/>
+        </gazebo>
+
+        <gazebo reference="${prefix}_tarsus">
+            <mu1>0.2</mu1>
+            <mu2>0.2</mu2>
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+
+        <xacro:leg_transmission name="${prefix}"/>
+    </xacro:macro>
+</robot>

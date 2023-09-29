@@ -1,0 +1,71 @@
+gazebo:
+  delay: 0.009
+  imus:
+    unitree_imu:
+      frame_id: unitree_imu
+      orientation_covariance_diagonal: [ 0.0012, 0.0012, 0.0012 ]
+      angular_velocity_covariance: [ 0.0004, 0.0004, 0.0004 ]
+      linear_acceleration_covariance: [ 0.01, 0.01, 0.01 ]
+  contacts: [ "LF_FOOT", "LH_FOOT", "RF_FOOT", "RH_FOOT" ]
+gazebo_ros_control:
+  pid_gains:
+    # these gains are used by the gazebo_ros_control plugin
+    RH_ankel_1:
+      p: 30.0
+      i: 0.1
+      d: 1.5
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    # the following gains are used by the gazebo_mimic_joint plugin
+    LH_ankel_1:
+      p: 30.0
+      i: 0.1
+      d: 1.5
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    LF_ankel_1:
+      p: 30.0
+      i: 0.1
+      d: 1.5
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    RF_ankel_1:
+      p: 30.0
+      i: 0.1
+      d: 1.5
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    RH_KFE_2:
+      p: 20.0
+      i: 0.1
+      d: 1.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    # the following gains are used by the gazebo_mimic_joint plugin
+    LH_KFE_2:
+      p: 20.0
+      i: 0.1
+      d: 1.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    LF_KFE_2:
+      p: 20.0
+      i: 0.1
+      d: 1.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    RF_KFE_2:
+      p: 20.0
+      i: 0.1
+      d: 1.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+
