@@ -1,22 +1,22 @@
 targetDisplacementVelocity          0.05;
 targetRotationVelocity              0.1;
 
-comHeight                           0.41
+comHeight                           0.48
 
 defaultJointState
 {
    (0,0)  0.17   ; LF_HAA
-   (1,0)  0.55   ; LF_HFE
-   (2,0)  -0.73   ; LF_KFE
+   (1,0)  0.99   ; LF_HFE
+   (2,0)  -1.76   ; LF_KFE
    (3,0)  0.17   ; LH_HAA
-   (4,0)  0.55   ; LH_HFE
-   (5,0)  -0.73  ; LH_KFE
+   (4,0)  0.99   ; LH_HFE
+   (5,0)  -1.76  ; LH_KFE
    (6,0)  -0.17   ; RF_HAA
-   (7,0)  -0.55   ; RF_HFE
-   (8,0)  0.73   ; RF_KFE
+   (7,0)  -0.99   ; RF_HFE
+   (8,0)  1.76   ; RF_KFE
    (9,0)  -0.17   ; RH_HAA
-   (10,0) -0.55   ; RH_HFE
-   (11,0) 0.73   ; RH_KFE
+   (10,0) -0.99   ; RH_HFE
+   (11,0) 1.76   ; RH_KFE
 }
 
 initialModeSchedule

@@ -20,7 +20,7 @@ swing_trajectory_config
   liftOffVelocity               0.07
   touchDownVelocity            -0.1
   swingHeight                   0.05
-  swingTimeScale                0.5
+  swingTimeScale                0.15
 }
 
 ; DDP settings
@@ -28,10 +28,10 @@ ddp
 {
   algorithm                       SLQ
 
-  nThreads                        8
+  nThreads                        3
   threadPriority                  50
 
-  maxNumIterations                1000
+  maxNumIterations                100
   minRelCost                      1e-1
   constraintTolerance             5e-3
 
@@ -68,9 +68,9 @@ ddp
 ; Multiple_Shooting SQP settings
 sqp
 {
-  nThreads                              8
+  nThreads                              3
   dt                                    0.015
-  sqpIteration                          70
+  sqpIteration                          1
   deltaTol                              1e-4
   g_max                                 1e-2
   g_min                                 1e-6
@@ -88,9 +88,9 @@ sqp
 ; Multiple_Shooting IPM settings
 ipm
 {
-  nThreads                              8
+  nThreads                              3
   dt                                    0.015
-  ipmIteration                          50
+  ipmIteration                          1
   deltaTol                              1e-4
   g_max                                 10.0
   g_min                                 1e-6
@@ -154,24 +154,24 @@ initialState
    ;; Base Pose: [position, orientation] ;;
    (6,0)  0.0     ; p_base_x
    (7,0)  0.0     ; p_base_y
-   (8,0)  0.41     ; p_base_z
+   (8,0)  0.48     ; p_base_z
    (9,0)  0.0     ; theta_base_z
    (10,0) 0.0     ; theta_base_y
    (11,0) 0.0     ; theta_base_x
 
    ;; Leg Joint Positions: [LF, LH, RF, RH] ;;
    (12,0) 0.17   ; LF_HAA
-   (13,0) 0.55   ; LF_HFE
-   (14,0) -0.73   ; LF_KFE
+   (13,0) 0.99   ; LF_HFE
+   (14,0) -1.76   ; LF_KFE
    (15,0) 0.17   ; LH_HAA
-   (16,0) 0.55   ; LH_HFE
-   (17,0) -0.73   ; LH_KFE
+   (16,0) 0.99   ; LH_HFE
+   (17,0) -1.76   ; LH_KFE
    (18,0) -0.17   ; RF_HAA
-   (19,0) -0.55  ; RF_HFE
-   (20,0) 0.73   ; RF_KFE
+   (19,0) -0.99  ; RF_HFE
+   (20,0) 1.76   ; RF_KFE
    (21,0) -0.17   ; RH_HAA
-   (22,0) -0.55   ; RH_HFE
-   (23,0) 0.73   ; RH_KFE
+   (22,0) -0.99   ; RH_HFE
+   (23,0) 1.76   ; RH_KFE
 }
 
 ; standard state weight matrix
@@ -198,16 +198,16 @@ Q
   ;; Leg Joint Positions: [LF, LH, RF, RH] ;;
   (12,12) 5.0     ; LF_HAA
   (13,13) 5.0     ; LF_HFE
-  (14,14) 2.5     ; LF_KFE
+  (14,14) 5.0     ; LF_KFE
   (15,15) 5.0     ; LH_HAA
   (16,16) 5.0     ; LH_HFE
-  (17,17) 2.5     ; LH_KFE
+  (17,17) 5.0     ; LH_KFE
   (18,18) 5.0     ; RF_HAA
   (19,19) 5.0     ; RF_HFE
-  (20,20) 2.5     ; RF_KFE
+  (20,20) 5.0     ; RF_KFE
   (21,21) 5.0     ; RH_HAA
   (22,22) 5.0     ; RH_HFE
-  (23,23) 2.5     ; RH_KFE
+  (23,23) 5.0     ; RH_KFE
 }
 
 ; control weight matrix
@@ -246,7 +246,7 @@ R
 
 frictionConeSoftConstraint
 {
-  frictionCoefficient    0.3
+  frictionCoefficient    0.9
 
   ; relaxed log barrier parameters
   mu                     0.1
