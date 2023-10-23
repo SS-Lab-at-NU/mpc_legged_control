@@ -160,17 +160,17 @@ initialState
    (11,0) 0.0     ; theta_base_x
 
    ;; Leg Joint Positions: [LF, LH, RF, RH] ;;
-   (12,0) 0.17   ; LF_HAA
-   (13,0) 0.99   ; LF_HFE
+   (12,0) 0.09   ; LF_HAA
+   (13,0) 1.13   ; LF_HFE
    (14,0) -1.76   ; LF_KFE
-   (15,0) 0.17   ; LH_HAA
-   (16,0) 0.99   ; LH_HFE
+   (15,0) 0.09   ; LH_HAA
+   (16,0) 1.13   ; LH_HFE
    (17,0) -1.76   ; LH_KFE
-   (18,0) -0.17   ; RF_HAA
-   (19,0) -0.99  ; RF_HFE
+   (18,0) -0.09   ; RF_HAA
+   (19,0) -1.13  ; RF_HFE
    (20,0) 1.76   ; RF_KFE
-   (21,0) -0.17   ; RH_HAA
-   (22,0) -0.99   ; RH_HFE
+   (21,0) -0.09   ; RH_HAA
+   (22,0) -1.13   ; RH_HFE
    (23,0) 1.76   ; RH_KFE
 }
 
@@ -198,16 +198,16 @@ Q
   ;; Leg Joint Positions: [LF, LH, RF, RH] ;;
   (12,12) 5.0     ; LF_HAA
   (13,13) 5.0     ; LF_HFE
-  (14,14) 5.0     ; LF_KFE
+  (14,14) 2.5     ; LF_KFE
   (15,15) 5.0     ; LH_HAA
   (16,16) 5.0     ; LH_HFE
-  (17,17) 5.0     ; LH_KFE
+  (17,17) 2.5     ; LH_KFE
   (18,18) 5.0     ; RF_HAA
   (19,19) 5.0     ; RF_HFE
-  (20,20) 5.0     ; RF_KFE
+  (20,20) 2.5     ; RF_KFE
   (21,21) 5.0     ; RH_HAA
   (22,22) 5.0     ; RH_HFE
-  (23,23) 5.0     ; RH_KFE
+  (23,23) 2.5     ; RH_KFE
 }
 
 ; control weight matrix
